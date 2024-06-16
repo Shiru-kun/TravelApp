@@ -28,6 +28,7 @@ public class WorldBankServiceImplTest {
     private WorldBankServiceImpl worldBankService;
 
     private static final String TEST_COUNTRY_CODE = "MZ";
+    private static final String INVALID_TEST_COUNTRY_CODE = "MZNN";
     private static final int CURRENT_YEAR = LocalDateTime.now().getYear();
     private static final String TEST_YEAR_INTERVAL = (CURRENT_YEAR - 10) + ":" + CURRENT_YEAR;
 
@@ -98,18 +99,21 @@ public class WorldBankServiceImplTest {
     }
 
     @Test
-    void testGetWorldBankPopulationIndicatorByCountry_OtherException() {
-        when(worldBankClient.getWorldBankIndicatorPopulationByCountry(TEST_COUNTRY_CODE, TEST_YEAR_INTERVAL))
-                .thenThrow(RuntimeException.class);
-
-        assertThrows(InternalServerErrorException.class,
-                () -> worldBankService.getWorldBankPopulationIndicatorByCountry(Optional.of(TEST_COUNTRY_CODE)));
-    }
-
-    @Test
     void testGetWorldBankPopulationIndicatorByCountry_NoCountrySelected() {
         assertThrows(NoSuchElementException.class,
                 () -> worldBankService.getWorldBankPopulationIndicatorByCountry(Optional.empty()));
+    }
+    @Test
+    void testGetWorldBankGpdIndicatorByCountry_ErrorResponse() {
+        ArrayList<Object> mockErrorResponse = createMockErrorResponse();
+
+        when(worldBankClient.getWorldBankIndicatorGpdByCountry(INVALID_TEST_COUNTRY_CODE, TEST_YEAR_INTERVAL))
+                .thenReturn(mockErrorResponse);
+
+    assertThrows(InternalServerErrorException.class, () ->
+                worldBankService.getWorldBankGpdIndicatorByCountry(Optional.of(INVALID_TEST_COUNTRY_CODE))
+        );
+
     }
 
     private ArrayList<Object> createMockResponse() {
@@ -147,5 +151,19 @@ public class WorldBankServiceImplTest {
 
         return mockResponse;
     }
+    private ArrayList<Object> createMockErrorResponse() {
+        Map<String, Object> errorMessage = new HashMap<>();
+        List<Map<String, Object>> messageList = new ArrayList<>();
+        Map<String, Object> messageDetails = new HashMap<>();
+        messageDetails.put("id", 120);
+        messageDetails.put("key", "Invalid value");
+        messageDetails.put("value", "The provided parameter value is not valid");
+        messageList.add(messageDetails);
+        errorMessage.put("message", messageList);
 
+        ArrayList<Object> mockErrorResponse = new ArrayList<>();
+        mockErrorResponse.add(errorMessage);
+
+        return mockErrorResponse;
+    }
 }
