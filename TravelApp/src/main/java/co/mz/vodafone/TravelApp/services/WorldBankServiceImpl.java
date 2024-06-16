@@ -35,19 +35,23 @@ public class WorldBankServiceImpl implements IWorldBankService {
 
         int year = LocalDateTime.now().getYear();
         String yearInterval = (year - YEAR_INTERVAL_STATS) + ":" + year;
+        WorldBankResponse worldbankResponse = new WorldBankResponse();
 
         try {
             Optional<ArrayList> result = Optional.ofNullable(_worldBankclient.getWorldBankIndicatorGpdByCountry(country.get(), yearInterval));
 
             if (result.isPresent()) {
+
                 var worldBankArray = result.get();
+                if(worldBankArray.isEmpty()){
+                    return Optional.of(worldbankResponse);
+                }
 
                 ObjectMapper objectMapper = getMapper();
                 WorldBankMetadataResponse metadata = objectMapper.convertValue(worldBankArray.get(0), WorldBankMetadataResponse.class);
 
                 List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {});
 
-                WorldBankResponse worldbankResponse = new WorldBankResponse();
                 worldbankResponse.setMetadata(metadata);
                 worldbankResponse.setData(data);
 
@@ -71,19 +75,21 @@ public class WorldBankServiceImpl implements IWorldBankService {
 
         int year = LocalDateTime.now().getYear();
         String yearInterval = (year - YEAR_INTERVAL_STATS) + ":" + year;
+        WorldBankResponse worldbankResponse = new WorldBankResponse();
 
         try {
             Optional<ArrayList> result = Optional.ofNullable(_worldBankclient.getWorldBankIndicatorPopulationByCountry(country.get(), yearInterval));
 
             if (result.isPresent()) {
                 var worldBankArray = result.get();
-
+                if(worldBankArray.isEmpty()){
+                    return Optional.of(worldbankResponse);
+                }
                 ObjectMapper objectMapper = getMapper();
                 WorldBankMetadataResponse metadata = objectMapper.convertValue(worldBankArray.get(0), WorldBankMetadataResponse.class);
 
                 List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {});
 
-                WorldBankResponse worldbankResponse = new WorldBankResponse();
                 worldbankResponse.setMetadata(metadata);
                 worldbankResponse.setData(data);
 
