@@ -135,6 +135,7 @@ This document outlines the API endpoints provided by the **TravelApp** backend a
   - **Password:** `root`
   - **URL:** `jdbc:postgresql://localhost:5432/vodafone_travel_assistant?currentSchema=vodafone_travel_assistant`
 - **Swagger UI Path:** `/api-docs`
+- **Swagger UI endpoint:** `http://localhost:8080/swagger-ui/index.html#/`
 
 ---
 
