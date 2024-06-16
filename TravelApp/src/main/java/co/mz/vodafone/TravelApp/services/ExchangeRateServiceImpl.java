@@ -1,11 +1,13 @@
 package co.mz.vodafone.TravelApp.services;
 
 import co.mz.vodafone.TravelApp.dtos.ExchangeRateResponse;
+import co.mz.vodafone.TravelApp.exceptions.BadRequestException;
 import co.mz.vodafone.TravelApp.exceptions.InternalServerErrorException;
 import co.mz.vodafone.TravelApp.exceptions.NoSuchElementException;
 import co.mz.vodafone.TravelApp.feignclients.ExchangeRateClient;
 import co.mz.vodafone.TravelApp.interfaces.IExchangeRateService;
 import feign.FeignException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +29,9 @@ public class ExchangeRateServiceImpl implements IExchangeRateService {
         try {
             return Optional.of(_exchangeRateClient.getExchangeRateByCountrySymbol(symbol.get()));
         } catch (FeignException ex) {
+            if(ex.status()== HttpStatus.BAD_REQUEST.value()){
+                throw new BadRequestException("No valid input for"+symbol.get());
+            }
             throw new InternalServerErrorException(String.valueOf(ex.status()).concat(INTERNAL_SERVER_API));
         } catch (Exception ex) {
             throw new InternalServerErrorException(INTERNAL_SERVER_API);
