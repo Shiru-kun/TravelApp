@@ -3,6 +3,7 @@ package co.mz.vodafone.TravelApp.services;
 import co.mz.vodafone.TravelApp.dtos.WorldBankData;
 import co.mz.vodafone.TravelApp.dtos.WorldBankMetadataResponse;
 import co.mz.vodafone.TravelApp.dtos.WorldBankResponse;
+import co.mz.vodafone.TravelApp.exceptions.BadRequestException;
 import co.mz.vodafone.TravelApp.exceptions.InternalServerErrorException;
 import co.mz.vodafone.TravelApp.exceptions.NoSuchElementException;
 import co.mz.vodafone.TravelApp.exceptions.NotFoundException;
@@ -133,7 +134,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
             Map<?, ?> messageDetails = (Map<?, ?>) messageList.get(0);
             String errorKey = (String) messageDetails.get("key");
             String errorValue = (String) messageDetails.get("value");
-            throw new NotFoundException("No results for inserted key ".concat(key));
+            throw new BadRequestException("invalid inserted key ".concat(key));
         }
     }
 }
