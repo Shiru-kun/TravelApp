@@ -77,6 +77,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
         loginResponse.setToken(jwtToken);
+        dto.setPassword(null);
         dto.setFullname(userAccount.getFullname());
         loginResponse.setUserAccountDto(dto);
         return loginResponse;
