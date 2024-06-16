@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ExchangeRateServiceImpl implements IExchangeRateService {
     public static final String INTERNAL_SERVER_API = " Internal server api";
     public static final String NO_SYMBOL_INSERTED = " No symbol inserted";
+    public static final String NO_VALID_INPUT_FOR = "No valid input for";
     private final ExchangeRateClient _exchangeRateClient;
 
     public ExchangeRateServiceImpl(ExchangeRateClient exchangeRateClient) {
@@ -30,7 +31,7 @@ public class ExchangeRateServiceImpl implements IExchangeRateService {
             return Optional.of(_exchangeRateClient.getExchangeRateByCountrySymbol(symbol.get()));
         } catch (FeignException ex) {
             if(ex.status()== HttpStatus.BAD_REQUEST.value()){
-                throw new BadRequestException("No valid input for"+symbol.get());
+                throw new BadRequestException(NO_VALID_INPUT_FOR +symbol.get());
             }
             throw new InternalServerErrorException(String.valueOf(ex.status()).concat(INTERNAL_SERVER_API));
         } catch (Exception ex) {
