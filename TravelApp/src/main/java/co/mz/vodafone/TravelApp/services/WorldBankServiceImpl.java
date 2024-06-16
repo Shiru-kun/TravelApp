@@ -5,6 +5,7 @@ import co.mz.vodafone.TravelApp.dtos.WorldBankMetadataResponse;
 import co.mz.vodafone.TravelApp.dtos.WorldBankResponse;
 import co.mz.vodafone.TravelApp.exceptions.InternalServerErrorException;
 import co.mz.vodafone.TravelApp.exceptions.NoSuchElementException;
+import co.mz.vodafone.TravelApp.exceptions.NotFoundException;
 import co.mz.vodafone.TravelApp.feignclients.WorldBankClient;
 import co.mz.vodafone.TravelApp.interfaces.IWorldBankService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -32,7 +33,6 @@ public class WorldBankServiceImpl implements IWorldBankService {
         if (country.isEmpty() || country.get().isEmpty()) {
             throw new NoSuchElementException("No country selected");
         }
-
         int year = LocalDateTime.now().getYear();
         String yearInterval = (year - YEAR_INTERVAL_STATS) + ":" + year;
         WorldBankResponse worldbankResponse = new WorldBankResponse();
@@ -43,6 +43,10 @@ public class WorldBankServiceImpl implements IWorldBankService {
             if (result.isPresent()) {
 
                 var worldBankArray = result.get();
+
+                if (containsErrorMessage(worldBankArray)) {
+                    handleErrorMessage(worldBankArray, country.get());
+                }
                 if(worldBankArray.isEmpty()){
                     return Optional.of(worldbankResponse);
                 }
@@ -63,7 +67,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
         } catch (FeignException ex) {
             throw new InternalServerErrorException("Feign exception: " + ex.status() + " " + ex.getMessage());
         } catch (Exception ex) {
-            throw new InternalServerErrorException("Exception: " + ex.getLocalizedMessage());
+            throw new InternalServerErrorException(ex.getLocalizedMessage());
         }
     }
 
@@ -82,6 +86,10 @@ public class WorldBankServiceImpl implements IWorldBankService {
 
             if (result.isPresent()) {
                 var worldBankArray = result.get();
+
+                if (containsErrorMessage(worldBankArray)) {
+                    handleErrorMessage(worldBankArray, country.get());
+                }
                 if(worldBankArray.isEmpty()){
                     return Optional.of(worldbankResponse);
                 }
@@ -100,14 +108,33 @@ public class WorldBankServiceImpl implements IWorldBankService {
 
         } catch (FeignException ex) {
             throw new InternalServerErrorException("Feign exception: " + ex.status() + " " + ex.getMessage());
-        } catch (Exception ex) {
-            throw new InternalServerErrorException("Exception: " + ex.getLocalizedMessage());
+        }
+        catch (NotFoundException ex) {
+            throw ex;
         }
     }
     private ObjectMapper getMapper(){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return  objectMapper;
+    }
+    private boolean containsErrorMessage(ArrayList<?> response) {
+        if (response.size() > 0 && response.get(0) instanceof Map) {
+            Map<?, ?> firstElement = (Map<?, ?>) response.get(0);
+            return firstElement.containsKey("message");
+        }
+        return false;
+    }
+
+    private void handleErrorMessage(ArrayList<?> response, String key) {
+        Map<?, ?> errorMessage = (Map<?, ?>) response.get(0);
+        List<?> messageList = (List<?>) errorMessage.get("message");
+        if (!messageList.isEmpty() && messageList.get(0) instanceof Map) {
+            Map<?, ?> messageDetails = (Map<?, ?>) messageList.get(0);
+            String errorKey = (String) messageDetails.get("key");
+            String errorValue = (String) messageDetails.get("value");
+            throw new NotFoundException("No results for inserted key ".concat(key));
+        }
     }
 }
 
