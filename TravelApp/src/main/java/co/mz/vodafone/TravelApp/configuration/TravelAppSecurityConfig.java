@@ -27,9 +27,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class TravelAppSecurityConfig {
-    private  UserAccountRepository _userAccountRepository;
-    public TravelAppSecurityConfig(UserAccountRepository userAccountRepository){
-        _userAccountRepository =userAccountRepository;
+    private UserAccountRepository _userAccountRepository;
+
+    public TravelAppSecurityConfig(UserAccountRepository userAccountRepository) {
+        _userAccountRepository = userAccountRepository;
     }
 
     @Bean
@@ -52,17 +53,18 @@ public class TravelAppSecurityConfig {
         ;
         return http.build();
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("**"));
-        configuration.setAllowedMethods(List.of("GET","POST","DELETE", "PUT", "PATCH"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "PATCH"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
@@ -72,18 +74,22 @@ public class TravelAppSecurityConfig {
         return username -> _userAccountRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
     @Bean
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -93,6 +99,7 @@ public class TravelAppSecurityConfig {
 
         return authProvider;
     }
+
     @Bean
     public RateLimitFilter rateLimitFilter() {
         return new RateLimitFilter();

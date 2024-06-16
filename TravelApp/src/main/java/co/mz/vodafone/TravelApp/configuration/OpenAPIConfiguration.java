@@ -19,7 +19,7 @@ public class OpenAPIConfiguration {
     private long serverPort;
 
     @Bean
-  public OpenAPI defineOpenApi() {
+    public OpenAPI defineOpenApi() {
         Server server = new Server();
         server.setUrl(URL.concat(String.valueOf(serverPort)));
         server.setDescription(DEVELOPMENT);
@@ -27,7 +27,7 @@ public class OpenAPIConfiguration {
                 .title(VODAFONE_CHALLENGE_API_FOR_TRAVEL_ASSISTANT_APP)
                 .version("1.0")
                 .description(VODAFONE_CHALLENGE_API_FOR_TRAVEL_ASSISTANT_APP);
-             //   .contact(myContact);
+        //   .contact(myContact);
         return new OpenAPI().info(information).servers(List.of(server));
     }
 }

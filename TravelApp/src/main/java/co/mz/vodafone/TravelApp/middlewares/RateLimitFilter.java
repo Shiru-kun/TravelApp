@@ -21,12 +21,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class RateLimitFilter extends OncePerRequestFilter {
     public static final String EXCEED_NUMBER_OF_REQUESTS_WAIT = "Exceed number of requests, wait ";
     @Value("${travel-app.rate-limit.max-requests}")
-    private  int maxRequests;
+    private int maxRequests;
 
     @Value("${travel-app.rate-limit.time-window}")
     private long timeWindow;
 
     private static final Map<String, Queue<Long>> requestMap = new ConcurrentHashMap<>();
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Duration TIME_WINDOW = Duration.ofMinutes(timeWindow);

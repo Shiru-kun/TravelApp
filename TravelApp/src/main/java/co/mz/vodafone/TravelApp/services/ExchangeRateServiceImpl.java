@@ -22,6 +22,7 @@ public class ExchangeRateServiceImpl implements IExchangeRateService {
     public ExchangeRateServiceImpl(ExchangeRateClient exchangeRateClient) {
         _exchangeRateClient = exchangeRateClient;
     }
+
     @Override
     public Optional<ExchangeRateResponse> getExchangeRateBySymbol(Optional<String> symbol) {
         if (symbol.isEmpty() || symbol.get().isEmpty()) {
@@ -30,8 +31,8 @@ public class ExchangeRateServiceImpl implements IExchangeRateService {
         try {
             return Optional.of(_exchangeRateClient.getExchangeRateByCountrySymbol(symbol.get()));
         } catch (FeignException ex) {
-            if(ex.status()== HttpStatus.BAD_REQUEST.value()){
-                throw new BadRequestException(NO_VALID_INPUT_FOR +symbol.get());
+            if (ex.status() == HttpStatus.BAD_REQUEST.value()) {
+                throw new BadRequestException(NO_VALID_INPUT_FOR + symbol.get());
             }
             throw new InternalServerErrorException(String.valueOf(ex.status()).concat(INTERNAL_SERVER_API));
         } catch (Exception ex) {

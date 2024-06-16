@@ -34,35 +34,37 @@ public class WorldBankController {
     public static final String GET_WORLD_BANK_POPULATION_DATA_FOR_A_GIVEN_COUNTRY_10_YEARS_TO_NOW = "Get world bank population data for a given country 10 years to now";
 
     private final IWorldBankService _worldBankService;
-    public WorldBankController(IWorldBankService worldBankService){
+
+    public WorldBankController(IWorldBankService worldBankService) {
         _worldBankService = worldBankService;
     }
 
     @Operation(
             summary = GET_WORLD_BANK_GPD_DATA_FOR_A_GIVEN_COUNTRY_10_YEARS_TO_NOW,
-            tags = { "World bank"})
+            tags = {"World bank"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = WorldBankResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = WorldBankResponse.class), mediaType = "application/json")}),
     })
     @GetMapping("/gpd/{country}")
     @CacheEvict(value = GPD_DATA, key = GPD_DATA_KEY)
     public ResponseEntity<WorldBankResponse> getWorldBankGpdResponseByCountry(@Parameter(
 
             description = GET_WORLD_BANK_GPD_DATA_BY_COUNTRY_CODE,
-            required = true) @PathVariable("country") Optional<String> country){
+            required = true) @PathVariable("country") Optional<String> country) {
         return ResponseEntity.ok(_worldBankService.getWorldBankGpdIndicatorByCountry(country).get());
     }
 
     @Operation(
             summary = GET_WORLD_BANK_POPULATION_DATA_FOR_A_GIVEN_COUNTRY_10_YEARS_TO_NOW,
-            tags = { "World bank"})
+            tags = {"World bank"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = WorldBankResponse.class), mediaType = "application/json") }),
-    })    @GetMapping("/population/{country}")
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = WorldBankResponse.class), mediaType = "application/json")}),
+    })
+    @GetMapping("/population/{country}")
     @CacheEvict(value = POPULATION_DATA, key = POPULATION_DATA_KEY)
     public ResponseEntity<WorldBankResponse> getWorldBankPopulationResponseByCountry(@Parameter(
             description = GET_WORLD_BANK_POPULATION_DATA_BY_COUNTRY_CODE,
-            required = true) @PathVariable("country") Optional<String> country){
+            required = true) @PathVariable("country") Optional<String> country) {
         return ResponseEntity.ok(_worldBankService.getWorldBankPopulationIndicatorByCountry(country).get());
     }
 }

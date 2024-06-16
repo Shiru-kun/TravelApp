@@ -22,6 +22,7 @@ public class FeignClientConfig extends FeignClientsConfiguration {
     public Decoder feignDecoder() {
         return new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(this.messageConverters())));
     }
+
     @Bean
     public Encoder feignEncoder() {
         return new SpringEncoder(this.messageConverters());
@@ -30,6 +31,7 @@ public class FeignClientConfig extends FeignClientsConfiguration {
     private ObjectFactory<HttpMessageConverters> messageConverters() {
         return () -> new HttpMessageConverters(new MappingJackson2HttpMessageConverter());
     }
+
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;

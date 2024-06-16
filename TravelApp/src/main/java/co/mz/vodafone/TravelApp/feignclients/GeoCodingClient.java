@@ -13,5 +13,5 @@ import java.util.List;
 @FeignClient(name = "GeoCodingClient", url = "${travel-app.external-endpoints.geocoding}", configuration = FeignClientConfig.class)
 public interface GeoCodingClient {
     @GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<City> getCityDetailsByName(@RequestParam("q") String city );
+    public List<City> getCityDetailsByName(@RequestParam("q") String city);
 }

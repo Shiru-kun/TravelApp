@@ -11,6 +11,7 @@ import feign.FeignException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class WeatherDataServiceImpl implements IWeatheDataService {
 
@@ -20,18 +21,18 @@ public class WeatherDataServiceImpl implements IWeatheDataService {
     private final WeatherClient _client;
     private final IGeoCodingService _geoCodingService;
 
-    public WeatherDataServiceImpl(IGeoCodingService geoCodingService, WeatherClient client){
+    public WeatherDataServiceImpl(IGeoCodingService geoCodingService, WeatherClient client) {
         _geoCodingService = geoCodingService;
         _client = client;
     }
+
     @Override
     public WeatherData getWeatherDataByCityLanLng(double lat, double lng) {
         try {
             return _client.getWeatherData(lat, lng);
-        }catch (FeignException ex){
-            throw new InternalServerErrorException( ex.status() + INTERNAL_API);
-        }
-        catch (Exception ex){
+        } catch (FeignException ex) {
+            throw new InternalServerErrorException(ex.status() + INTERNAL_API);
+        } catch (Exception ex) {
             throw new InternalServerErrorException(ex.getLocalizedMessage());
         }
     }

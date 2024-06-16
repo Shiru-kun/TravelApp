@@ -34,9 +34,9 @@ public class WeatherController {
     // Get weather data for a given city
     @Operation(
             summary = GET_WEATHER_DATA_FOR_A_GIVEN_CITY,
-            tags = { "Weather"})
+            tags = {"Weather"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = WeatherData.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = WeatherData.class), mediaType = "application/json")}),
     })
     @GetMapping("/{city}")
     @CacheEvict(value = WEATHER_DATA, key = WEATHER_DATA_KEY)
@@ -52,6 +52,7 @@ public class WeatherController {
     public ResponseEntity<WeatherData> getDefaultWeather() {
         return getWeatherFor(Optional.empty());
     }
+
     @GetMapping("/")
     public ResponseEntity<WeatherData> getDefaultWeatherEmpty() {
         return getWeatherFor(Optional.empty());

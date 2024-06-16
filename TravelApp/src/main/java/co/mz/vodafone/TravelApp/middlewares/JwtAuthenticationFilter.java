@@ -34,9 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER_ = "Bearer ";
     @Autowired
-    private  JwtService _jwtService;
+    private JwtService _jwtService;
     @Autowired
-    private  UserDetailsService _userDetailsService;
+    private UserDetailsService _userDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -74,17 +74,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException ex) {
             response.setContentType(CONTENT_TYPE);
-            ErrorResponse errorResponse= new ErrorResponse();
+            ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.setStatusCode(HttpStatus.FORBIDDEN.value());
             errorResponse.setMessage(EXPIRED_SESSION.concat(ex.getMessage()));
-            throw  new ForbiddenException(EXPIRED_SESSION.concat(ex.getMessage()));
-        }
-        catch (Exception ex){
+            throw new ForbiddenException(EXPIRED_SESSION.concat(ex.getMessage()));
+        } catch (Exception ex) {
             response.setContentType(CONTENT_TYPE);
-            ErrorResponse errorResponse= new ErrorResponse();
+            ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorResponse.setMessage(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
-            throw  new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
 
         }
     }

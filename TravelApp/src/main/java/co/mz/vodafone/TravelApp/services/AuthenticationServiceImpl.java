@@ -55,28 +55,29 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
     public UserAccount signup(UserAccountDto input) {
         Optional<UserAccount> userAccount = Optional.empty();
         var email = input.getEmail();
         var password = input.getPassword();
         var fullname = input.getFullname();
 
-        if(email ==null || email.isEmpty()){
-            throw  new BadRequestException(USER_EMAIL_CANNOT_BE_NULL);
+        if (email == null || email.isEmpty()) {
+            throw new BadRequestException(USER_EMAIL_CANNOT_BE_NULL);
         }
         if (!isValidEmail(email)) {
             throw new BadRequestException(INVALID_EMAIL_FORMAT);
         }
-        if(password==null|| password.isEmpty()){
-            throw  new BadRequestException(USER_PASSWORD_CANNOT_BE_NULL);
+        if (password == null || password.isEmpty()) {
+            throw new BadRequestException(USER_PASSWORD_CANNOT_BE_NULL);
         }
         try {
             userAccount = userRepository.findByEmail(email);
-        }catch (Exception ex){
-            throw  new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(String.valueOf(ex.getLocalizedMessage())));
+        } catch (Exception ex) {
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(String.valueOf(ex.getLocalizedMessage())));
         }
-        if(userAccount.isPresent()){
-            throw  new ConflictException(USER_WITH_EMAIL.concat(email.concat(ALREADY_EXISTS)));
+        if (userAccount.isPresent()) {
+            throw new ConflictException(USER_WITH_EMAIL.concat(email.concat(ALREADY_EXISTS)));
         }
         UserAccount user = new UserAccount();
         user.setFullname(fullname);
@@ -87,26 +88,26 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public LoginResponse login(UserAccountDto dto) {
-        boolean isAuthenticated =false;
-       try {
-           var autenticate = authenticationManager.authenticate(
-                   new UsernamePasswordAuthenticationToken(
-                           dto.getEmail(),
-                           dto.getPassword()
-                   )
-           );
-           isAuthenticated = autenticate.isAuthenticated();
-       }catch ( BadCredentialsException ex){
-           throw new BadRequestException("Wrong credentials");
-       }catch (Exception ex){
-           throw ex;
-       }
+        boolean isAuthenticated = false;
+        try {
+            var autenticate = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            dto.getEmail(),
+                            dto.getPassword()
+                    )
+            );
+            isAuthenticated = autenticate.isAuthenticated();
+        } catch (BadCredentialsException ex) {
+            throw new BadRequestException("Wrong credentials");
+        } catch (Exception ex) {
+            throw ex;
+        }
 
-        if(!isAuthenticated){
+        if (!isAuthenticated) {
             throw new NotFoundException(NOT_AUTHENTICADED);
         }
-       var userAccount = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(()-> new NotFoundException(NOT_FOUND_USER_WITH_EMAIL.concat(dto.getEmail())));
+        var userAccount = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USER_WITH_EMAIL.concat(dto.getEmail())));
         String jwtToken = jwtService.generateToken(userAccount);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setExpiresIn(jwtService.getExpirationTime());

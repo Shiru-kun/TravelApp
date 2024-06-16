@@ -13,7 +13,7 @@ import java.util.List;
 @FeignClient(name = "WorldBankClient", url = "${travel-app.external-endpoints.world-bank-api}", configuration = FeignClientConfig.class)
 public interface WorldBankClient {
     @GetMapping(value = "/{country}/indicators/NY.GDP.MKTP.CD?format=json&date={year-interval}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrayList getWorldBankIndicatorGpdByCountry(@PathVariable("country") String country,@PathVariable("year-interval") String yearInterval );
+    public ArrayList getWorldBankIndicatorGpdByCountry(@PathVariable("country") String country, @PathVariable("year-interval") String yearInterval);
 
     @GetMapping(value = "/{country}/indicators/SP.POP.TOTL?format=json&date={year-interval}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrayList getWorldBankIndicatorPopulationByCountry(@PathVariable("country") String country, @PathVariable("year-interval") String yearInterval);

@@ -48,14 +48,15 @@ public class WorldBankServiceImpl implements IWorldBankService {
                 if (containsErrorMessage(worldBankArray)) {
                     handleErrorMessage(worldBankArray, country.get());
                 }
-                if(worldBankArray.isEmpty()){
+                if (worldBankArray.isEmpty()) {
                     return Optional.of(worldbankResponse);
                 }
 
                 ObjectMapper objectMapper = getMapper();
                 WorldBankMetadataResponse metadata = objectMapper.convertValue(worldBankArray.get(0), WorldBankMetadataResponse.class);
 
-                List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {});
+                List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {
+                });
 
                 worldbankResponse.setMetadata(metadata);
                 worldbankResponse.setData(data);
@@ -91,13 +92,14 @@ public class WorldBankServiceImpl implements IWorldBankService {
                 if (containsErrorMessage(worldBankArray)) {
                     handleErrorMessage(worldBankArray, country.get());
                 }
-                if(worldBankArray.isEmpty()){
+                if (worldBankArray.isEmpty()) {
                     return Optional.of(worldbankResponse);
                 }
                 ObjectMapper objectMapper = getMapper();
                 WorldBankMetadataResponse metadata = objectMapper.convertValue(worldBankArray.get(0), WorldBankMetadataResponse.class);
 
-                List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {});
+                List<WorldBankData> data = objectMapper.convertValue(worldBankArray.get(1), new TypeReference<List<WorldBankData>>() {
+                });
 
                 worldbankResponse.setMetadata(metadata);
                 worldbankResponse.setData(data);
@@ -109,16 +111,17 @@ public class WorldBankServiceImpl implements IWorldBankService {
 
         } catch (FeignException ex) {
             throw new InternalServerErrorException("Feign exception: " + ex.status() + " " + ex.getMessage());
-        }
-        catch (NotFoundException ex) {
+        } catch (NotFoundException ex) {
             throw ex;
         }
     }
-    private ObjectMapper getMapper(){
+
+    private ObjectMapper getMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return  objectMapper;
+        return objectMapper;
     }
+
     private boolean containsErrorMessage(ArrayList<?> response) {
         if (response.size() > 0 && response.get(0) instanceof Map) {
             Map<?, ?> firstElement = (Map<?, ?>) response.get(0);

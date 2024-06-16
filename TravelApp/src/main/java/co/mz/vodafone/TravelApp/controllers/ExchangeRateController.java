@@ -39,9 +39,9 @@ public class ExchangeRateController {
     // Get exchange rate data for a given symbol
     @Operation(
             summary = GET_EXCHANGE_RATE_DATA_FOR_A_GIVEN_SYMBOL,
-            tags = { "Exchange rate"})
+            tags = {"Exchange rate"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ExchangeRateResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ExchangeRateResponse.class), mediaType = "application/json")}),
     })
     @GetMapping("/{symbol}")
     @CacheEvict(value = EXCHANGE_RATE, key = EXCHANGE_RATE_KEY)
@@ -55,19 +55,20 @@ public class ExchangeRateController {
     // Defaults endpoints if no symbol is provided
     @Operation(
             summary = "Defaults endpoints if no symbol is provided",
-            tags = { "Exchange rate"})
+            tags = {"Exchange rate"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")}),
     })
     @GetMapping("")
     public ResponseEntity<ExchangeRateResponse> getDefaultExchangeRate() {
         return getExchangeRateFor(Optional.empty());
     }
+
     @Operation(
             summary = "Defaults endpoints if no symbol is provided",
-            tags = { "Exchange rate"})
+            tags = {"Exchange rate"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")}),
     })
     @GetMapping("/")
     public ResponseEntity<ExchangeRateResponse> getDefaultExchangeRateEmpty() {
