@@ -3,6 +3,7 @@ package co.mz.vodafone.TravelApp.controllers;
 import co.mz.vodafone.TravelApp.dtos.WorldBankResponse;
 import co.mz.vodafone.TravelApp.interfaces.IWorldBankService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class WorldBankController {
         _worldBankService = worldBankService;
     }
 
+    @Tag(name = "get", description = "Get world bank gpd data for a given country 10 years to now")
     @GetMapping("/gpd/{country}")
     @CacheEvict(value = GPD_DATA, key = GPD_DATA_KEY)
     public ResponseEntity<WorldBankResponse> getWorldBankGpdResponseByCountry(@Parameter(
@@ -37,6 +39,7 @@ public class WorldBankController {
         return ResponseEntity.ok(_worldBankService.getWorldBankGpdIndicatorByCountry(country).get());
     }
 
+    @Tag(name = "get", description = "Get world bank population data for a given country 10 years to now")
     @GetMapping("/population/{country}")
     @CacheEvict(value = POPULATION_DATA, key = POPULATION_DATA_KEY)
     public ResponseEntity<WorldBankResponse> getWorldBankPopulationResponseByCountry(@Parameter(
