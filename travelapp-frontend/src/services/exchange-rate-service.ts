@@ -3,7 +3,7 @@ import { getExchangeRateByCurrency } from "../functions/exchange-rate";
 
 export const useExchangeRateQuery= (currencyCode:string,isEnabled:boolean)=>
     useQuery(
-        ["ExchangeRate"],
+        ["ExchangeRate",currencyCode],
         () => getExchangeRateByCurrency(currencyCode),
         {
           enabled:isEnabled

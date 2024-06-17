@@ -5,7 +5,7 @@ import { COUNTRY_CURRENCY_CODE } from "../mocks/country_by_currency_code";
 
 export const useWorldBankPopulationQuery = (countryCode: string, isEnabled: boolean) =>
   useQuery(
-    ["WorldBankPopulation"],
+    ["WorldBankPopulation", countryCode],
     () => getWorldBankPopulationByCountryCode(countryCode),
     {
       enabled: isEnabled
@@ -14,7 +14,7 @@ export const useWorldBankPopulationQuery = (countryCode: string, isEnabled: bool
 
 export const useWorldBankGpdQuery = (countryCode: string, isEnabled: boolean) =>
   useQuery(
-    ["WorldBankGpd"],
+    ["WorldBankGpd",countryCode],
     () => getWorldBankGpdByCountryCode(countryCode),
     {
       enabled: isEnabled
