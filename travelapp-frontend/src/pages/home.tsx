@@ -4,7 +4,6 @@ import styles from '../styles/pages/home/home.module.scss';
 import WeatherTab from "../components/WeatherTab";
 import PopulationGpdTab from "../components/PopulationGpdTab";
 import ExchangeRateTab from "../components/ExchangeRateTab";
-import { Authprovider, useAuth } from "./authentication/Authprovider";
 import {  useNavigate } from 'react-router-dom'
 import { AUTH_LOCALSTORAGE } from "../utils/constants";
 import { useTranslation } from "react-i18next";
@@ -14,7 +13,6 @@ export default function Home() {
     const [activeTab, setActiveTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
     const [countryCode, setCountryCode] = useState<string>('MZ');
-    const {logout } = useAuth() || {};
     const navigate = useNavigate()
     const { t } = useTranslation();
 
@@ -36,15 +34,11 @@ export default function Home() {
     return t('GoodNight');
   };
   const _logout =(e:any)=>{
-    if(logout){
-      logout();
-    }
     localStorage.clear();
     window.location.reload();
   }
 
     return (
-      <Authprovider>
     <Layout>
    <div className={styles.container}>
         <h1 className={styles.title}>{t('TravelAppAssistant')}</h1>
@@ -84,8 +78,6 @@ export default function Home() {
         </div>
       </div>
             
-        </Layout>
-      </Authprovider>
-    
+        </Layout>    
     )
   }

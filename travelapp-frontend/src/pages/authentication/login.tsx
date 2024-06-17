@@ -5,7 +5,6 @@ import Layout from './layout';
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../utils/axios-config';
 import { AUTH_LOCALSTORAGE, LANGUAGES, LOGIN } from '../../utils/constants';
-import { useAuth } from './Authprovider';
 import toast, { Toaster } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +14,6 @@ const Login = () => {
   const { i18n, t } = useTranslation();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { login } = useAuth() || {};
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -28,14 +26,7 @@ const Login = () => {
         return;
       }
       localStorage.setItem(AUTH_LOCALSTORAGE, JSON.stringify(loginResponse))
-
-      if (loginResponse?.userAccountDto?.fullname) {
-        if (login) {
-          login(loginResponse?.userAccountDto?.fullname);
-        }
-      }
       navigate("/")
-
     } catch (ex: any) {
       if (ex?.response?.data?.message) {
         toast.error(`${ex?.response?.data?.message}`)
