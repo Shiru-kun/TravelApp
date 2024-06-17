@@ -55,22 +55,7 @@ public class TravelAppSecurityConfig {
         ;
         return http.build();
     }
-
-  /*  @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOrigins(List.of("**"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "PATCH"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
-    }*/
-
+    
     @Bean
     UserDetailsService userDetailsService() {
         return username -> _userAccountRepository.findByEmail(username)
