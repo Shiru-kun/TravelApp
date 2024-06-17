@@ -14,7 +14,7 @@ export const useWorldBankPopulationQuery = (countryCode: string, isEnabled: bool
 
 export const useWorldBankGpdQuery = (countryCode: string, isEnabled: boolean) =>
   useQuery(
-    ["WorldBankPopulation"],
+    ["WorldBankGpd"],
     () => getWorldBankGpdByCountryCode(countryCode),
     {
       enabled: isEnabled

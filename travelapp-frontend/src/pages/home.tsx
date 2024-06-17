@@ -6,6 +6,7 @@ import PopulationGpdTab from "../components/PopulationGpdTab";
 import ExchangeRateTab from "../components/ExchangeRateTab";
 import { Authprovider, useAuth } from "./authentication/Authprovider";
 import {  useNavigate } from 'react-router-dom'
+import { AUTH_LOCALSTORAGE } from "../utils/constants";
 
 export default function Home() {
   
@@ -15,7 +16,10 @@ export default function Home() {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
     const { isAuthenticated, user, logout } = useAuth() || {};
     const navigate = useNavigate()
-
+    let userLogged:any = localStorage.getItem(AUTH_LOCALSTORAGE);
+    if(userLogged){
+      userLogged =JSON.parse(userLogged);
+    }
   const handleChange =(event: ChangeEvent<HTMLInputElement>): void=>  {
     const _searchTerm =event.target.value;    
     setSearchTerm(_searchTerm)
@@ -52,10 +56,10 @@ export default function Home() {
    <div className={styles.container}>
         <h1 className={styles.title}>Travel app assistant</h1>
         <div className={styles.auth}>
-          {isAuthenticated ? (
-            <div>
-              <p>{`${getGreeting()}, ${user?.name}`}</p>
-              <button onClick={_logout}>Sair</button>
+          {userLogged ? (
+            <div style={{padding:5, margin:5}}>
+              <p>{`${getGreeting()}, ${userLogged?.userAccountDto?.fullname}`}</p>
+              <a onClick={_logout}>sign out</a>
             </div>
           ) : (
             <a onClick={login}>Go to login</a>

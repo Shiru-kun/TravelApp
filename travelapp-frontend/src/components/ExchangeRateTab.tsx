@@ -12,7 +12,7 @@ const ExchangeRateTab = ({countryCode }: {countryCode:string }) => {
     <div className={styles.card}>
       <h2>Exchange Rate</h2>
       {data?.success  ? (
-        <p> {data?.base} = {data?.rates["MZN"]} {data?.rates[0]}</p>
+        <p> {data?.base} = {data?.rates[`${_countryCode}`]}</p>
       ) : (
         <div className={`${styles.blurText} ${styles.tabContent}`} style={{margin:10}}> <div className='loader'/> </div>
       )}
