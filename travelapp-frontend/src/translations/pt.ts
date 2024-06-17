@@ -37,5 +37,7 @@ export const pt =  {
         Value :"Valor",
         GPD :"PIB",
         Population :"Populacação",
+        OpsWeEncounteredAnErrorTryAgain :"Ops ocorreu um erro, tente novamente",
+        NoDataFound :"Sem informação a mostrar para",
     },
   }

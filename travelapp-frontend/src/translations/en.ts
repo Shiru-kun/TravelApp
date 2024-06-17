@@ -37,6 +37,8 @@ export const en =  {
         Value :"Value",
         GPD :"GPD",
         Population :"Population",
+        OpsWeEncounteredAnErrorTryAgain :"Ops we encountered an error, try again",
+        NoDataFound :"No data found for",
 
 
 
