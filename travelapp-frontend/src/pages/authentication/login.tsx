@@ -36,8 +36,8 @@ const Login = () => {
         navigate("/")
 
     }catch(ex:any){
-      if(ex?.message){
-        toast.error(`${ex?.message}`)
+      if(ex?.response?.data?.message){
+        toast.error(`${ex?.response?.data?.message}`)
       }
       console.log({ex})
     }
@@ -54,7 +54,7 @@ const openWithoutLogin = ()=>{
     <Layout>
       <div><Toaster/></div>
   <div className={styles.container}>
-      <img src={vm_logo} alt="Vodafone Logo" className={styles.logo} />
+      <img src={vm_logo} loading="lazy" alt="Vodafone Logo" className={styles.logo} />
       <h1 className={styles.title}>Login Travel Assistant</h1>
       <form className={styles.form}>
         <input 

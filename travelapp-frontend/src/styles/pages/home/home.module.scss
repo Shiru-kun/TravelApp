@@ -169,7 +169,7 @@
   .buttonSimple{
     @extend button;
     background-color: gray;
-    
+    cursor: pointer;
   }
 
   a {

@@ -12,7 +12,7 @@ const WeatherCard =({ data }: { data?: WeatherDataType }) => {
           <div className={styles.card}>
             <div className={styles.cardHeader}>
               <h2>{convertToCelsius(main?.temp)} °C</h2>
-              <img src={weatherIconUrl} alt={weather?.[0]?.description} />
+              <img src={weatherIconUrl} loading="lazy" alt={weather?.[0]?.description} />
             </div>
             <div className={styles.cardContent}>
              <p><strong>Location:</strong>  {name??""}, {sys?.country} </p>

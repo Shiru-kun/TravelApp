@@ -13,16 +13,14 @@ export default function Home() {
     const [activeTab, setActiveTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
     const [countryCode, setCountryCode] = useState<string>('MZ');
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
-    const { isAuthenticated, user, logout } = useAuth() || {};
+    const {logout } = useAuth() || {};
     const navigate = useNavigate()
     let userLogged:any = localStorage.getItem(AUTH_LOCALSTORAGE);
     if(userLogged){
       userLogged =JSON.parse(userLogged);
     }
   const handleChange =(event: ChangeEvent<HTMLInputElement>): void=>  {
-    const _searchTerm =event.target.value;    
-    setSearchTerm(_searchTerm)
+    setSearchTerm(prev=>event.target.value)
   }
   const login = ()=>{
 
@@ -41,15 +39,7 @@ export default function Home() {
     localStorage.clear();
     window.location.reload();
   }
-  useEffect(() => {
-    const handler = setTimeout(() => {
-        setDebouncedSearchTerm(searchTerm);
-    }, 700);
 
-    return () => {
-        clearTimeout(handler);
-    };
-}, [searchTerm]);
     return (
       <Authprovider>
     <Layout>
