@@ -4,9 +4,8 @@ import styles from '../styles/pages/home/home.module.scss';
 import WeatherTab from "../components/WeatherTab";
 import PopulationGpdTab from "../components/PopulationGpdTab";
 import ExchangeRateTab from "../components/ExchangeRateTab";
-import { ExchangeRateDataType } from "../types";
 import { Authprovider, useAuth } from "./authentication/Authprovider";
-import { useLocation, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 export default function Home() {
   

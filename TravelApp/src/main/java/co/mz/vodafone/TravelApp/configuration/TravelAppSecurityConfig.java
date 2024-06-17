@@ -56,7 +56,7 @@ public class TravelAppSecurityConfig {
         return http.build();
     }
 
-    @Bean
+  /*  @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
@@ -69,7 +69,7 @@ public class TravelAppSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
-    }
+    }*/
 
     @Bean
     UserDetailsService userDetailsService() {

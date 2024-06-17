@@ -28,6 +28,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+
     public static final String CONTENT_TYPE = "application/json";
     public static final String INTERNAL_SERVER_ERROR = "Internal server error ";
     public static final String EXPIRED_SESSION = "Expired session ";
@@ -37,7 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtService _jwtService;
     @Autowired
     private UserDetailsService _userDetailsService;
-
+    @Autowired
+    private HandlerExceptionResolver handlerExceptionResolver;
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -83,7 +86,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorResponse.setMessage(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
-            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
+            handlerExceptionResolver.resolveException(request, response, null, new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(ex.getMessage())));
 
         }
     }
