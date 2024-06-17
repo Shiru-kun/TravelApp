@@ -21,7 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-const DataGraph = ({ label }: { label: string }) => {
+const DataGraph = ({ label, color }: { label: string,color?:string }) => {
   const [graphData, setGraphData]= useState<any>([])
   const [labels, setLabels]= useState<number[]>([])
   const data = GraphData;
@@ -37,9 +37,10 @@ const DataGraph = ({ label }: { label: string }) => {
   },[])
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: {
-            position: "top" as const,
+            position: "bottom" as const,
         },
         title: {
             display: true,
@@ -50,32 +51,34 @@ const DataGraph = ({ label }: { label: string }) => {
         x: {
             title: {
                 display: true,
-                text: 'tempo',
+                text: 'time',
                 color: 'black'
             }
         },
         y: {
             title: {
                 display: true,
-                text: 'Valor',
+                text: 'value',
                 color: 'black'
             }
         }
     }
 };
-  return (
-    <div className={styles.tabContent}>
-    <div className={styles.card}>
-    <Line options={options}  data={{labels:labels, datasets: [{
-                     label: `Indicator ${label}`,
-                     data:graphData ,
-                     borderColor: "red",
-                     backgroundColor: "white",
-                     
-                 }]}}/>
+  return ( 
+    <div className={styles.tabcontent}>
+      <div style={{ width: '100%', height: '300px' }}>
+        <Line options={options} data={{
+          labels: labels, datasets: [{
+            label: `Indicator ${label}`,
+            data: graphData,
+            borderColor: color ?? "Red",
+            backgroundColor: "white",
+          }]
+        }} />
+      </div></div>
 
-    </div>
-    </div>
+   
+
   );
 };
 

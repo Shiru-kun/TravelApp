@@ -4,11 +4,9 @@ import DataGraph from './DataGraph';
 
 const PopulationGpdTab = () => {
   return (
-    <div className={styles.tabContent}>
-      <div className={styles.cardsContainer}>
-        <DataGraph label='GPD' />
-        <DataGraph label='Population' />
-      </div>
+    <div className={styles.container}>
+        <DataGraph label='GPD' color='red' />
+        <DataGraph label='Population' color='blue'/>
     </div>
   );
 };
