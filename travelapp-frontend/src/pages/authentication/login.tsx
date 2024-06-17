@@ -79,11 +79,11 @@ const openWithoutLogin = ()=>{
       <a onClick={openWithoutLogin} style={{margin:10}} className={styles.buttonSimple}>Go as guest</a>
 
 
-      <select className={styles.languageSelector}>
+      {/* <select className={styles.languageSelector}>
         <option value="pt">Português</option>
         <option value="en">English</option>
         <option value="es">Español</option>
-      </select>
+      </select> */}
 
       <footer className={styles.footer}>
         © {new Date().getFullYear()} <br />
