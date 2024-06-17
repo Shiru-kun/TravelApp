@@ -31,7 +31,6 @@ async function createRequest<RequestDataType, ResponseType>(
       return response.data
     } catch (error) {
       const axiosAbort = error as AxiosError
-        throw axiosAbort;
     }
   }
   export const get = async <ResponseType, RequestDataType = never>(

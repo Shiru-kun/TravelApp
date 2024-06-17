@@ -3,6 +3,7 @@ import Home from './pages/home';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/authentication/login';
 import Signup from './pages/authentication/signup';
+import './styles/globals.scss'
 
 const router = createHashRouter([  {
   path: '/',

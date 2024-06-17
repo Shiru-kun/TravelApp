@@ -81,7 +81,7 @@ const DataGraph = ({ label, color, data }: { data?: any, label: string, color?: 
               }]
             }} />
           </>
-          : <>  <div className={`${styles.blurText}`} style={{ width: '100%', height: '300px' }}> <div className='loader' /> </div>
+          : <>  <div className={`${styles.blurText}`} style={{ width: '100%', height: '300px' }}> </div>
           </>}
 
       </div>
