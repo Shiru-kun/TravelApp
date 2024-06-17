@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/pages/home/home.module.scss';
-import { GraphData } from '../mocks/population';
 import { Line } from 'react-chartjs-2';
 import {
   CategoryScale,
