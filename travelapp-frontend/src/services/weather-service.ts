@@ -3,7 +3,7 @@ import { getWeatherByCity } from "../functions/weather";
 
 export const useWeatherQuery= (city:string,isEnabled:boolean)=>
     useQuery(
-        ["weather"],
+        ["weather",city],
         () => getWeatherByCity(city),
         {
           enabled:isEnabled
