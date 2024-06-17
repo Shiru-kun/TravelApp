@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Layout from "./layout";
 import styles from '../styles/pages/home/home.module.scss';
 import WeatherTab from "../components/WeatherTab";
@@ -8,7 +8,9 @@ import { ExchangeRateDataType } from "../types";
 
 export default function Home() {
     const [activeTab, setActiveTab] = useState('weather');
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState<string>('Maputo');
+    const [countryCode, setCountryCode] = useState<string>('MZ');
+
     const exchangerate:ExchangeRateDataType = {
         "success": true,
         "timestamp": 1718574003,
@@ -18,6 +20,13 @@ export default function Home() {
             "MZN": 68.196682
         }
     }
+  const handleChange =(event: ChangeEvent<HTMLInputElement>): void=>  {
+    const _searchTerm =event.target.value;
+    
+    console.log({_searchTerm});
+    setSearchTerm(_searchTerm)
+  }
+
     return (
         
         <Layout>
@@ -27,7 +36,7 @@ export default function Home() {
           type="text"
           placeholder="Search for a city..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleChange}
           className={styles.search}
         />
         <div className={styles.tabs}>
@@ -42,9 +51,9 @@ export default function Home() {
           </button>
         </div>
         <div className={styles.content}>
-          {activeTab === 'weather' && <WeatherTab />}
-          {activeTab === 'exchangerate' && <ExchangeRateTab data={exchangerate} />}
-          {activeTab === 'gpdpopulation' && <PopulationGpdTab />}
+          {activeTab === 'weather' && <WeatherTab searchTerm={searchTerm} setCountryCode={setCountryCode}/>}
+          {activeTab === 'exchangerate' && <ExchangeRateTab countryCode={countryCode} />}
+          {activeTab === 'gpdpopulation' && <PopulationGpdTab countryCode={countryCode}/>}
         </div>
       </div>
             

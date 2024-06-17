@@ -42,6 +42,8 @@ public class TravelAppSecurityConfig {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
+                        .requestMatchers("/1.0/weather/**").permitAll()
+
                         .anyRequest()
                         .authenticated()
                 )

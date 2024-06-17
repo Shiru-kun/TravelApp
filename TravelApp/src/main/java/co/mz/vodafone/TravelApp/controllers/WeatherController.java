@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Tag(name = "Weather", description = "Weather for a specific city")
+@CrossOrigin
 @RestController
 @RequestMapping("/1.0/weather")
 public class WeatherController {

@@ -15,14 +15,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @Tag(name = "Exchange rate", description = "Get exchange rate of a specific country currency")
+@CrossOrigin
 @RestController
 @RequestMapping("/1.0/exchange-rate")
 public class ExchangeRateController {

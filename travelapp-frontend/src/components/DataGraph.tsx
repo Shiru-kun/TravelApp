@@ -21,19 +21,24 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-const DataGraph = ({ label, color }: { label: string,color?:string }) => {
-  const [graphData, setGraphData]= useState<any>([])
+const DataGraph = ({ label, color,data }: {data?:any, label: string,color?:string }) => {
+  const [graphData, setGraphData]= useState<any[]>([])
   const [labels, setLabels]= useState<number[]>([])
-  const data = GraphData;
   useEffect(()=>{
-      var mappedData = data.data.map(d=>{
-         return { year: d.date, value:d.value }
-      });
-      mappedData = mappedData.sort((a, b) => parseInt(a.year) - parseInt(b.year));
-      const _labels: number[] = mappedData.map(d => parseInt(d.year));
-      const _data: number[] = mappedData.map(d => d?.value??0);
-      setLabels(_labels)
-      setGraphData(_data);
+    try{
+      var mappedData = data?.data?.map((d: { date: any; value: any; })=>{
+        return { year: d.date, value:d.value }
+     });
+     mappedData = mappedData.sort((a: { year: string; }, b: { year: string; }) => parseInt(a.year) - parseInt(b.year));
+     const _labels: number[] = mappedData.map((d: { year: string; }) => parseInt(d.year));
+     const _data: number[] = mappedData.map((d: { value: any; }) => d?.value??0);
+     setLabels(_labels)
+     setGraphData(_data);
+
+    }catch(ex){
+        //TODO HANDLE
+    }
+     
   },[])
   const options = {
     responsive: true,
@@ -67,7 +72,9 @@ const DataGraph = ({ label, color }: { label: string,color?:string }) => {
   return ( 
     <div className={styles.tabcontent}>
       <div style={{ width: '100%', height: '300px' }}>
-        <Line options={options} data={{
+        {graphData && graphData.length>0?
+        <>
+         <Line options={options} data={{
           labels: labels, datasets: [{
             label: `Indicator ${label}`,
             data: graphData,
@@ -75,6 +82,10 @@ const DataGraph = ({ label, color }: { label: string,color?:string }) => {
             backgroundColor: "white",
           }]
         }} />
+        </>
+        :<>  <div className={`${styles.blurText}`} style={{ width: '100%', height: '300px' }}> <div className='loader'/> </div>
+</>}
+       
       </div></div>
 
    

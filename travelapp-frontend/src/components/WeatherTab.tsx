@@ -1,65 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../styles/pages/home/home.module.scss';
 import WeatherCard from './WeatherCard';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
-const WeatherTab = () => {
-  const weatherData = {
-    coord: {
-      lon: 32.5675,
-      lat: -25.9662
-    },
-    weather: [
-      {
-        id: 801,
-        main: "Clouds",
-        description: "few clouds",
-        icon: "02n"
-      }
-    ],
-    main: {
-      temp: 290.31,
-      feels_like: 290.38,
-      temp_min: 290.31,
-      temp_max: 290.31,
-      pressure: 1024,
-      humidity: 88,
-      sea_level: 0,
-      grnd_level: 0
-    },
-    visibility: 10000,
-    wind: {
-      speed: 0.0,
-      deg: 0,
-      gust: 0.0
-    },
-    clouds: {
-      all: 20
-    },
-    sys: {
-      country: "MZ",
-      sunrise: 1718512499,
-      sunset: 1718550363
-    },
-    name: "Maputo"
-  };
+import { useWeatherQuery } from '../services/weather-service';
+import { QueryStatus } from 'react-query';
 
+const WeatherTab = ({searchTerm,setCountryCode}:{searchTerm:string, setCountryCode: React.Dispatch<React.SetStateAction<string>>}) => {
+  const sendRequest:boolean = searchTerm?true:false;
+  const {data} = useWeatherQuery(searchTerm,sendRequest);
+  useEffect(()=>{
+    if(data?.sys?.country){
+      setCountryCode(data?.sys?.country)
+    }
+  },[])
+  
   return (
     <div className={styles.tabContent}>
-       <WeatherCard data={weatherData} />
+      {data?<>
+      <WeatherCard data={data} />
        <div id="map">
-        <MapContainer  center={[weatherData.coord.lat, weatherData.coord.lon]} zoom={5} scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <Marker position={[weatherData.coord.lat, weatherData.coord.lon]}>
+        <MapContainer  center={[data?.coord?.lat??0, data?.coord?.lon??0]} zoom={5} scrollWheelZoom={false}>
+    <Marker position={[data?.coord?.lat??0, data?.coord?.lon??0]}>
       <Popup>
         A pretty CSS3 popup. <br /> Easily customizable.
       </Popup>
     </Marker>
       </MapContainer>
        </div>
-
+      </>:<>
+          <div className={'loader'}></div>
+      </>}
     </div>
   );
 };
