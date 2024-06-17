@@ -70,10 +70,10 @@ export default function Home() {
           <button className={activeTab === 'weather' ? styles.active : ''} onClick={() => setActiveTab('weather')}>
            {t('Weather')}
           </button>
-          <button className={activeTab === 'exchangerate' ? styles.active : ''} onClick={() => setActiveTab('exchangerate')}>
+          <button disabled={!searchTerm} className={activeTab === 'exchangerate' ? styles.active : ''} onClick={() => setActiveTab('exchangerate')}>
           {t('ExchangeRate')}
           </button>
-          <button className={activeTab === 'gpdpopulation' ? styles.active : ''} onClick={() => setActiveTab('gpdpopulation')}>
+          <button disabled={!searchTerm} className={activeTab === 'gpdpopulation' ? styles.active : ''} onClick={() => setActiveTab('gpdpopulation')}>
           {t('PopulationAndGpd')}
           </button>
         </div>
