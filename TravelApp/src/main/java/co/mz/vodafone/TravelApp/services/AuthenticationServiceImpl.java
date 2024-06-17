@@ -30,6 +30,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public static final String USER_PASSWORD_CANNOT_BE_NULL = "user password cannot be null";
     private static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static final String INVALID_EMAIL_FORMAT = "invalid email format";
+    public static final String WRONG_CREDENTIALS = "Wrong credentials";
     private final UserAccountRepository userRepository;
     private final JwtService jwtService;
 
@@ -98,7 +99,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             );
             isAuthenticated = autenticate.isAuthenticated();
         } catch (BadCredentialsException ex) {
-            throw new BadRequestException("Wrong credentials");
+            throw new BadRequestException(WRONG_CREDENTIALS);
         } catch (Exception ex) {
             throw ex;
         }

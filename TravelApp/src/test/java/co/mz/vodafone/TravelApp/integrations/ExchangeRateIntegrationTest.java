@@ -5,6 +5,7 @@ import co.mz.vodafone.TravelApp.dtos.ExchangeRateResponse;
 import co.mz.vodafone.TravelApp.dtos.UserAccountDto;
 import co.mz.vodafone.TravelApp.feignclients.ExchangeRateClient;
 import co.mz.vodafone.TravelApp.interfaces.IAuthenticationService;
+import co.mz.vodafone.TravelApp.repositories.UserAccountRepository;
 import co.mz.vodafone.TravelApp.utils.JwtTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,8 @@ class ExchangeRateControllerIntegrationTest {
 
     @Autowired
     private IAuthenticationService authenticationService;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
     @MockBean
     private ExchangeRateClient exchangeRateClient;
@@ -45,6 +48,7 @@ class ExchangeRateControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        userAccountRepository.deleteAll();
         createTestUser();
     }
 

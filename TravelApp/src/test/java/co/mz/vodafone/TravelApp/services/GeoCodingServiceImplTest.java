@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 public class GeoCodingServiceImplTest {
 
+    public static final String CITY_IS_EMPTY = "City is empty";
+    public static final String IS_NOT_FOUND = " is not found";
+    public static final String CITY_NAME = "Maputo";
     @Mock
     private GeoCodingClient geoCodingClient;
 
@@ -42,7 +45,7 @@ public class GeoCodingServiceImplTest {
             geoCodingService.getCityDetails(null);
         });
 
-        String expectedMessage = "City is empty";
+        String expectedMessage = CITY_IS_EMPTY;
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -54,7 +57,7 @@ public class GeoCodingServiceImplTest {
             geoCodingService.getCityDetails("");
         });
 
-        String expectedMessage = "City is empty";
+        String expectedMessage = CITY_IS_EMPTY;
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -69,7 +72,7 @@ public class GeoCodingServiceImplTest {
             geoCodingService.getCityDetails(cityName);
         });
 
-        String expectedMessage = cityName.concat(" is not found");
+        String expectedMessage = cityName.concat(IS_NOT_FOUND);
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -77,7 +80,7 @@ public class GeoCodingServiceImplTest {
 
     @Test
     void testGetCityDetails_ValidCity() {
-        String cityName = "Maputo";
+        String cityName = CITY_NAME;
         City city = new City();
         city.setName(cityName);
         List<City> cities = new ArrayList<>();

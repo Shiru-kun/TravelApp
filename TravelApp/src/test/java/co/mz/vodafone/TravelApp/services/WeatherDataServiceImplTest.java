@@ -28,9 +28,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class WeatherDataServiceImplTest {
 
+    public static final String CITY_IS_EMPTY = "City is empty";
     @Mock
     private WeatherClient weatherClient;
 
@@ -90,7 +90,7 @@ public class WeatherDataServiceImplTest {
             weatherDataService.getWeatherDataByCityName(Optional.of(""));
         });
 
-        String expectedMessage = "City is empty";
+        String expectedMessage = CITY_IS_EMPTY;
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

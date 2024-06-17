@@ -55,7 +55,7 @@ public class TravelAppSecurityConfig {
         ;
         return http.build();
     }
-    
+
     @Bean
     UserDetailsService userDetailsService() {
         return username -> _userAccountRepository.findByEmail(username)

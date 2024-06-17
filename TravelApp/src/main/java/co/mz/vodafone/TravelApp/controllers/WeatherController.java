@@ -26,10 +26,10 @@ public class WeatherController {
     public static final String WEATHER_DATA = "weatherData";
     public static final String WEATHER_DATA_KEY = "#weatherDataKey";
     public static final String GET_WEATHER_DATA_FOR_A_GIVEN_CITY = "Get weather data for a given city";
-    private final IWeatheDataService weatherDataService;
+    private final IWeatheDataService _weatherDataService;
 
     public WeatherController(IWeatheDataService weatherDataService) {
-        this.weatherDataService = weatherDataService;
+        _weatherDataService = weatherDataService;
     }
 
     // Get weather data for a given city
@@ -44,7 +44,7 @@ public class WeatherController {
     public ResponseEntity<WeatherData> getWeatherFor(@Parameter(
             description = "City",
             required = true) @PathVariable("city") Optional<String> city) {
-        Optional<WeatherData> weatherDataOptional = weatherDataService.getWeatherDataByCityName(city);
+        Optional<WeatherData> weatherDataOptional = _weatherDataService.getWeatherDataByCityName(city);
         return ResponseEntity.status(HttpStatus.OK).body(weatherDataOptional.get());
     }
 

@@ -21,8 +21,12 @@ import java.util.*;
 @Service
 public class WorldBankServiceImpl implements IWorldBankService {
 
+    public static final String NO_COUNTRY_SELECTED = "No country selected";
     private static final String INTERNAL_API = "";
     public static final int YEAR_INTERVAL_STATS = 10;
+    public static final String FEIGN_EXCEPTION = "Feign exception: ";
+    public static final String INVALID_INSERTED_KEY = "invalid inserted key ";
+    public static final String FEIGN_EXCEPTION1 = "Feign exception: ";
     private final WorldBankClient _worldBankclient;
 
     public WorldBankServiceImpl(WorldBankClient worldBankclient) {
@@ -67,7 +71,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
             return Optional.empty();
 
         } catch (FeignException ex) {
-            throw new InternalServerErrorException("Feign exception: " + ex.status() + " " + ex.getMessage());
+            throw new InternalServerErrorException(FEIGN_EXCEPTION1 + ex.status() + " " + ex.getMessage());
         } catch (Exception ex) {
             throw new InternalServerErrorException(ex.getLocalizedMessage());
         }
@@ -76,7 +80,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
     @Override
     public Optional<WorldBankResponse> getWorldBankPopulationIndicatorByCountry(Optional<String> country) {
         if (country.isEmpty() || country.get().isEmpty()) {
-            throw new NoSuchElementException("No country selected");
+            throw new NoSuchElementException(NO_COUNTRY_SELECTED);
         }
 
         int year = LocalDateTime.now().getYear();
@@ -110,7 +114,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
             return Optional.empty();
 
         } catch (FeignException ex) {
-            throw new InternalServerErrorException("Feign exception: " + ex.status() + " " + ex.getMessage());
+            throw new InternalServerErrorException(FEIGN_EXCEPTION + ex.status() + " " + ex.getMessage());
         } catch (NotFoundException ex) {
             throw ex;
         }
@@ -137,7 +141,7 @@ public class WorldBankServiceImpl implements IWorldBankService {
             Map<?, ?> messageDetails = (Map<?, ?>) messageList.get(0);
             String errorKey = (String) messageDetails.get("key");
             String errorValue = (String) messageDetails.get("value");
-            throw new BadRequestException("invalid inserted key ".concat(key));
+            throw new BadRequestException(INVALID_INSERTED_KEY.concat(key));
         }
     }
 }
