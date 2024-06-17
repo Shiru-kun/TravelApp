@@ -31,6 +31,13 @@ export default function Home() {
     if (hour < 18) return "Good Afternoon";
     return "Good Night";
   };
+  const _logout =(e:any)=>{
+    if(logout){
+      logout();
+    }
+    localStorage.clear();
+    window.location.reload();
+  }
   useEffect(() => {
     const handler = setTimeout(() => {
         setDebouncedSearchTerm(searchTerm);
@@ -49,7 +56,7 @@ export default function Home() {
           {isAuthenticated ? (
             <div>
               <p>{`${getGreeting()}, ${user?.name}`}</p>
-              <button onClick={logout}>Sair</button>
+              <button onClick={_logout}>Sair</button>
             </div>
           ) : (
             <a onClick={login}>Go to login</a>

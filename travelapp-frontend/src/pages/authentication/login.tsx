@@ -13,6 +13,9 @@ const Login = () => {
 const signup = ()=>{
   navigate("/signup")
 }
+const openWithoutLogin = ()=>{
+  navigate("/")
+}
   return (
     <Layout>
   <div className={styles.container}>
@@ -25,6 +28,7 @@ const signup = ()=>{
         <button onClick={handleLogin} className={styles.button}>Login</button>
       </form>
       <a onClick={signup} style={{margin:10}} className={styles.buttonSimple}>Signup now</a>
+      <a onClick={openWithoutLogin} style={{margin:10}} className={styles.buttonSimple}>Go as guest</a>
 
 
       <select className={styles.languageSelector}>
