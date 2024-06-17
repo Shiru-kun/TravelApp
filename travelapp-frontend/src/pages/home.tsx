@@ -62,6 +62,7 @@ export default function Home() {
           type="text"
           placeholder={t('SearchForCity')}
           value={searchTerm}
+          disabled={activeTab!=="weather"}
           onChange={handleChange}
           className={styles.search}
         />
