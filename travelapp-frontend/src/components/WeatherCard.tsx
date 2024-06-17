@@ -27,8 +27,9 @@ const WeatherCard =({ data }: { data?: WeatherDataType }) => {
               <p><strong>Pressure:</strong> {main?.pressure} hPa</p>
               <p><strong>Humidity:</strong> {main?.humidity}%</p>
               <p><strong>Visibility:</strong> {data?.visibility??0 / 1000} km</p>
-              <p><strong>Sunrise:</strong> {new Date(sys?.sunrise??0 * 1000).toLocaleTimeString()}</p>
-              <p><strong>Sunset:</strong> {new Date(sys?.sunset??0 * 1000).toLocaleTimeString()}</p>
+            <p><strong>Sunrise:</strong> {sys && sys.sunrise ? new Date(sys.sunrise * 1000).toLocaleTimeString() : 'N/A'}</p>
+            <p><strong>Sunset:</strong> {sys && sys.sunset ? new Date(sys.sunset * 1000).toLocaleTimeString() : 'N/A'}</p>
+
             </div>
           </div>
           <div className={styles.card}>
