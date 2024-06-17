@@ -1,5 +1,5 @@
 
-export type WeatherData = {
+export type WeatherDataType = {
     coord: {
       lon: number;
       lat: number;
@@ -36,3 +36,38 @@ export type WeatherData = {
     };
     name: string;
   };
+  export type ExchangeRateDataType = {
+    success: boolean;
+    timestamp: number;
+    base: string;
+    date: string;
+    rates: Record<string, number>;
+  };
+  export type WorldBankDataType = {
+    metadata: {
+      page: number;
+      pages: number;
+      perPage: number;
+      total: number;
+      sourceid: string;
+      lastupdated: string;
+    };
+    data: {
+      indicator: {
+        id: string;
+        value: string;
+      };
+      country: {
+        id: string;
+        value: string;
+      };
+      countryiso3code: string;
+      date: string;
+      value: number | null;
+      unit: string;
+      obsStatus: any; 
+      decimal: number;
+    }[];
+  };
+  
+  
