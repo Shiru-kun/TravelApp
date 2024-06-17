@@ -2,13 +2,17 @@ import React from 'react';
 import styles from '../../styles/pages/authentication/auth.module.scss';
 import vm_logo from '../../assets/vm_logo.png';
 import Layout from './layout';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    // Lógica de login aqui
   };
-
+const signup = ()=>{
+  navigate("/signup")
+}
   return (
     <Layout>
   <div className={styles.container}>
@@ -20,6 +24,8 @@ const Login = () => {
 
         <button onClick={handleLogin} className={styles.button}>Login</button>
       </form>
+      <a onClick={signup} style={{margin:10}} className={styles.buttonSimple}>Signup now</a>
+
 
       <select className={styles.languageSelector}>
         <option value="pt">Português</option>

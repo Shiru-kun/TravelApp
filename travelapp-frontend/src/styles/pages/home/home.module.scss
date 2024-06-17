@@ -144,6 +144,45 @@
   animation: loading 1.5s infinite;
 }
 
+.auth {
+  text-align: center;
+  margin-bottom: 20px;
+
+  p {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #cc0000;
+    }
+  }
+  .buttonSimple{
+    @extend button;
+    background-color: gray;
+    
+  }
+
+  a {
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 18px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+ 
 @keyframes loading {
   0% {
     background-color: #f0f0f0;

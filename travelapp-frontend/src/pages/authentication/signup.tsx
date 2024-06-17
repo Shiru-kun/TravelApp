@@ -2,8 +2,14 @@ import React from 'react';
 import styles from '../../styles/pages/authentication/auth.module.scss';
 import vm_logo from '../../assets/vm_logo.png';
 import Layout from './layout';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+  const navigate = useNavigate()
+
+  const login = ()=>{
+    navigate("/login")
+  }
   function handleSignup(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   }
 
@@ -21,6 +27,8 @@ export default function Signup() {
 
           <button onClick={handleSignup} className={styles.button}>Signup</button>
         </form>
+        <a onClick={login} style={{margin:10}} className={styles.buttonSimple}>Login</a>
+
 
         <select className={styles.languageSelector}>
           <option value="pt">Português</option>

@@ -14,7 +14,7 @@ const ExchangeRateTab = ({countryCode }: {countryCode:string }) => {
       {data?.success  ? (
         <p> {data?.base} = {data?.rates["MZN"]} {data?.rates[0]}</p>
       ) : (
-        <div className={`${styles.blurText} ${styles.card}`} style={{margin:10}}> <div className='loader'/> </div>
+        <div className={`${styles.blurText} ${styles.tabContent}`} style={{margin:10}}> <div className='loader'/> </div>
       )}
     </div>
     </div>

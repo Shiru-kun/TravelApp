@@ -5,33 +5,56 @@ import WeatherTab from "../components/WeatherTab";
 import PopulationGpdTab from "../components/PopulationGpdTab";
 import ExchangeRateTab from "../components/ExchangeRateTab";
 import { ExchangeRateDataType } from "../types";
+import { Authprovider, useAuth } from "./authentication/Authprovider";
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function Home() {
+  
     const [activeTab, setActiveTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
     const [countryCode, setCountryCode] = useState<string>('MZ');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
+    const { isAuthenticated, user, logout } = useAuth() || {};
+    const navigate = useNavigate()
 
-    const exchangerate:ExchangeRateDataType = {
-        "success": true,
-        "timestamp": 1718574003,
-        "base": "EUR",
-        "date": "2024-06-16",
-        "rates": {
-            "MZN": 68.196682
-        }
-    }
   const handleChange =(event: ChangeEvent<HTMLInputElement>): void=>  {
-    const _searchTerm =event.target.value;
-    
-    console.log({_searchTerm});
+    const _searchTerm =event.target.value;    
     setSearchTerm(_searchTerm)
   }
+  const login = ()=>{
 
+    navigate("login");
+  }
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Night";
+  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+        setDebouncedSearchTerm(searchTerm);
+    }, 700);
+
+    return () => {
+        clearTimeout(handler);
+    };
+}, [searchTerm]);
     return (
-        
-        <Layout>
+      <Authprovider>
+    <Layout>
    <div className={styles.container}>
         <h1 className={styles.title}>Travel app assistant</h1>
+        <div className={styles.auth}>
+          {isAuthenticated ? (
+            <div>
+              <p>{`${getGreeting()}, ${user?.name}`}</p>
+              <button onClick={logout}>Sair</button>
+            </div>
+          ) : (
+            <a onClick={login}>Go to login</a>
+          )}
+        </div>
         <input
           type="text"
           placeholder="Search for a city..."
@@ -58,5 +81,7 @@ export default function Home() {
       </div>
             
         </Layout>
+      </Authprovider>
+    
     )
   }
