@@ -7,14 +7,17 @@ import ExchangeRateTab from "../components/ExchangeRateTab";
 import { Authprovider, useAuth } from "./authentication/Authprovider";
 import {  useNavigate } from 'react-router-dom'
 import { AUTH_LOCALSTORAGE } from "../utils/constants";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  
+
     const [activeTab, setActiveTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
     const [countryCode, setCountryCode] = useState<string>('MZ');
     const {logout } = useAuth() || {};
     const navigate = useNavigate()
+    const { t } = useTranslation();
+
     let userLogged:any = localStorage.getItem(AUTH_LOCALSTORAGE);
     if(userLogged){
       userLogged =JSON.parse(userLogged);
@@ -28,9 +31,9 @@ export default function Home() {
   }
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good Morning";
-    if (hour < 18) return "Good Afternoon";
-    return "Good Night";
+    if (hour < 12) return t('GoodMorning');
+    if (hour < 18) return t('GoodAfternoon');
+    return t('GoodNight');
   };
   const _logout =(e:any)=>{
     if(logout){
@@ -44,33 +47,33 @@ export default function Home() {
       <Authprovider>
     <Layout>
    <div className={styles.container}>
-        <h1 className={styles.title}>Travel app assistant</h1>
+        <h1 className={styles.title}>{t('TravelAppAssistant')}</h1>
         <div className={styles.auth}>
           {userLogged ? (
             <div style={{padding:5, margin:5}}>
               <p>{`${getGreeting()}, ${userLogged?.userAccountDto?.fullname}`}</p>
-              <a onClick={_logout}>sign out</a>
+              <a onClick={_logout}>{t('SignOut')}</a>
             </div>
           ) : (
-            <a onClick={login}>Go to login</a>
+            <a onClick={login}>{t('GoToLogin')}</a>
           )}
         </div>
         <input
           type="text"
-          placeholder="Search for a city..."
+          placeholder={t('SearchForCity')}
           value={searchTerm}
           onChange={handleChange}
           className={styles.search}
         />
         <div className={styles.tabs}>
           <button className={activeTab === 'weather' ? styles.active : ''} onClick={() => setActiveTab('weather')}>
-            Weather
+           {t('Weather')}
           </button>
           <button className={activeTab === 'exchangerate' ? styles.active : ''} onClick={() => setActiveTab('exchangerate')}>
-          Exchange rate 
+          {t('ExchangeRate')}
           </button>
           <button className={activeTab === 'gpdpopulation' ? styles.active : ''} onClick={() => setActiveTab('gpdpopulation')}>
-          Population and Gpd
+          {t('PopulationAndGpd')}
           </button>
         </div>
         <div className={styles.content}>

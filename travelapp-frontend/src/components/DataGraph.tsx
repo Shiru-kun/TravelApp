@@ -12,6 +12,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js"
+import { useTranslation } from 'react-i18next';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,7 +25,8 @@ ChartJS.register(
 let graphData :any[]= []
   let labels :number[]= []
 const DataGraph = ({ label, color, data }: { data?: any, label: string, color?: string }) => {
-  
+  const { t } = useTranslation();
+
    try {
      var mappedData = data?.data?.map((d: { date: any; value: any; }) => {
        return { year: d.date, value: d.value }
@@ -54,14 +56,14 @@ const DataGraph = ({ label, color, data }: { data?: any, label: string, color?: 
       x: {
         title: {
           display: true,
-          text: 'time',
+          text: t('Time'),
           color: 'black'
         }
       },
       y: {
         title: {
           display: true,
-          text: 'value',
+          text: t('Value'),
           color: 'black'
         }
       }
@@ -74,7 +76,7 @@ const DataGraph = ({ label, color, data }: { data?: any, label: string, color?: 
           <>
             <Line options={options} data={{
               labels: labels, datasets: [{
-                label: `Indicator ${label}`,
+                label: `${t('Indicator')} ${label}`,
                 data: graphData,
                 borderColor: color ?? "Red",
                 backgroundColor: "white",

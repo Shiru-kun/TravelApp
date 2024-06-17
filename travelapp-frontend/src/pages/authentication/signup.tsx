@@ -4,11 +4,14 @@ import vm_logo from '../../assets/vm_logo.png';
 import Layout from './layout';
 import { useNavigate } from 'react-router-dom';
 import { post } from '../../utils/axios-config';
-import { SIGN_UP } from '../../utils/constants';
+import { LANGUAGES, SIGN_UP } from '../../utils/constants';
 import toast, { Toaster } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 export default function Signup() {
   const navigate = useNavigate()
+  const { i18n, t } = useTranslation();
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [fullname, setFullname] = useState<string>('');
@@ -16,41 +19,45 @@ export default function Signup() {
   const login = () => {
     navigate("/login")
   }
-  const handleSignup =async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> {
+  const onChangeLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const lang_code = e.target.value;
+    i18n.changeLanguage(lang_code);
+  };
+  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    try{
-      const accountResponse:any = await post(SIGN_UP, {
-        email,password,fullname
+    try {
+      const accountResponse: any = await post(SIGN_UP, {
+        email, password, fullname
       });
-      if(accountResponse===undefined || accountResponse===null ){
-        toast.error(`Can't register user`);
+      if (accountResponse === undefined || accountResponse === null) {
+        toast.error(t('CantRegisterUser'));
         return;
-     }
-     if(accountResponse?.id){
-       toast.success("User registered, you can sign now");
-       login();
-     }
-    }catch(ex:any){
-      if(ex?.response?.data?.message){
+      }
+      if (accountResponse?.id) {
+        toast.success(t('UserRegisteredYouCanSignNow'));
+        login();
+      }
+    } catch (ex: any) {
+      if (ex?.response?.data?.message) {
         toast.error(`${ex?.response?.data?.message}`)
       }
-      console.log({ex});
+      console.log({ ex });
     }
 
   }
 
   return (
     <Layout>
-      <div><Toaster/></div>
+      <div><Toaster /></div>
       <div className={styles.container}>
         <img src={vm_logo} loading="lazy" alt="Vodafone Logo" className={styles.logo} />
-        <h1 className={styles.title}>Signup Travel Assistant</h1>
+        <h1 className={styles.title}>{t('SignupTravelAssistant')}</h1>
 
         <form className={styles.form}>
           <input
             type="text"
             className={styles.input}
-            placeholder="Your name"
+            placeholder={t("Yourfullname")}
             value={fullname}
             onChange={e => setFullname(e.target.value)}
             required />
@@ -69,19 +76,21 @@ export default function Signup() {
             placeholder="*******"
             required />
 
-          <button onClick={handleSignup} className={styles.button}>Signup</button>
+          <button onClick={handleSignup} className={styles.button}>{t('Signup')}</button>
         </form>
-        <a onClick={login} style={{ margin: 10 }} className={styles.buttonSimple}>Login</a>
+        <a onClick={login} style={{ margin: 10 }} className={styles.buttonSimple}>{t('Login')}</a>
 
 
-        <select className={styles.languageSelector}>
-          <option value="pt">Português</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
+        <select className={styles.languageSelector} defaultValue={i18n.language} onChange={onChangeLang}>
+          {LANGUAGES.map(({ code, label }) => (
+            <option key={code} value={code}>
+              {label}
+            </option>
+          ))}
         </select>
 
         <footer className={styles.footer}>
-          © {new Date().getFullYear()} <br />
+          {new Date().getFullYear()} <br />
         </footer>
       </div>
     </Layout>

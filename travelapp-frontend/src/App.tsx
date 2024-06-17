@@ -4,6 +4,7 @@ import ErrorPage from './pages/ErrorPage';
 import Login from './pages/authentication/login';
 import Signup from './pages/authentication/signup';
 import './styles/globals.scss'
+import './i18n'
 
 const router = createHashRouter([  {
   path: '/',

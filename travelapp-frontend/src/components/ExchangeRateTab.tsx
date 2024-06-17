@@ -1,16 +1,18 @@
 import styles from '../styles/pages/home/home.module.scss';
 import { useExchangeRateQuery } from '../services/exchange-rate-service';
 import { getCurrencyByCountryCode } from '../services/worldbank-service';
+import { useTranslation } from 'react-i18next';
 
 const ExchangeRateTab = ({countryCode }: {countryCode:string }) => {
   const _countryCode = getCurrencyByCountryCode(countryCode);
-  
+  const { t } = useTranslation();
+
   const sendRequest:boolean = _countryCode?true:false;
   const {data} = useExchangeRateQuery(_countryCode??countryCode,sendRequest);
   return (
     <div className={styles.tabContent}>
     <div className={styles.card}>
-      <h2>Exchange Rate</h2>
+      <h2>{t('ExchangeRate')}</h2>
       {data?.success  ? (
         <p> {data?.base} = {data?.rates[`${_countryCode}`]}</p>
       ) : (

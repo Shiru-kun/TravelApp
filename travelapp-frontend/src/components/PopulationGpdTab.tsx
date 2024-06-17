@@ -2,15 +2,18 @@ import React from 'react';
 import styles from '../styles/pages/home/home.module.scss';
 import DataGraph from './DataGraph';
 import { useWorldBankGpdQuery, useWorldBankPopulationQuery } from '../services/worldbank-service';
+import { useTranslation } from 'react-i18next';
 
 const PopulationGpdTab = ({countryCode}:{countryCode:string}) => {
   const sendRequest:boolean = countryCode?true:false;
   const queryDataGpd = useWorldBankGpdQuery(countryCode,sendRequest);
   const queryDataPopulation = useWorldBankPopulationQuery(countryCode,sendRequest);
+  const { t } = useTranslation();
+
   return (
     <div className={styles.container}>
-        <DataGraph data={queryDataGpd?.data} label='GPD' color='red' />
-        <DataGraph  data={queryDataPopulation?.data} label='Population' color='blue'/>
+        <DataGraph data={queryDataGpd?.data} label={t('GPD')} color='red' />
+        <DataGraph  data={queryDataPopulation?.data} label={t('Population')} color='blue'/>
     </div>
   );
 };

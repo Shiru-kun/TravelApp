@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from '../styles/pages/home/home.module.scss';
 import WeatherCard from './WeatherCard';
-import { MapContainer, TileLayer,Marker, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer,Marker } from 'react-leaflet'
 import { useWeatherQuery } from '../services/weather-service';
 
 const WeatherTab = ({searchTerm,setCountryCode}:{searchTerm:string, setCountryCode: React.Dispatch<React.SetStateAction<string>>}) => {

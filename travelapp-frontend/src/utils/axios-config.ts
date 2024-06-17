@@ -30,7 +30,7 @@ async function createRequest<RequestDataType, ResponseType>(
   
       return response.data
     } catch (error) {
-      const axiosAbort = error as AxiosError
+      //TODO CORRECT HANDLER
     }
   }
   export const get = async <ResponseType, RequestDataType = never>(
