@@ -111,17 +111,7 @@
     margin-top: 20px;
     text-align: center;
     max-width: 300px;
-    animation: fadeIn 1s ease-in-out;
   }
   
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+
   

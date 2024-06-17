@@ -44,6 +44,7 @@ const Login = () => {
     navigate("/signup")
   }
   const openWithoutLogin = () => {
+    localStorage.clear();
     navigate("/")
   }
   return (
