@@ -38,7 +38,7 @@ describe("Lets test home",()=>{
 
 
   })
-  it("user can type seach input",()=>{
+  it("user can type search input",()=>{
     const searchForCityKey = "SearchForCity";
 
     const inputSearch = screen.getByPlaceholderText(searchForCityKey);

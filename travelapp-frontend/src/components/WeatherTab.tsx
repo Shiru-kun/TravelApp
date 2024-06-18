@@ -32,7 +32,7 @@ const WeatherTab = ({searchTerm,setCountryCode}:Props) => {
      <> <span>{t('OpsWeEncounteredAnErrorTryAgain')}</span></>
     ),
     loading: (
-      <> <div className={styles.cardsContainer}>
+      <> <div className={styles.cardsContainer}  data-testid="loading">
       <div className={`${styles.card} ${styles.blurText}`}></div>
       <div className={`${styles.card} ${styles.blurText}`}></div>
       <div className={`${styles.card} ${styles.blurText}`}></div>
@@ -40,7 +40,7 @@ const WeatherTab = ({searchTerm,setCountryCode}:Props) => {
     ),
     success: (
       <>  {data?<>
-      <WeatherCard data={data} />
+      <WeatherCard data={data} data-testid="data"/>
       <MapContainer  center={[data?.coord?.lat, data?.coord?.lon]} zoom={13} scrollWheelZoom={false}>
       <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -50,11 +50,11 @@ const WeatherTab = ({searchTerm,setCountryCode}:Props) => {
           </Marker>
       </MapContainer>
       </>:<>
-      <span className={styles.active}>{t('NoDataFound')} {searchTerm}</span>
+      <span className={styles.active} data-testid="NoDataFound">{t('NoDataFound')} {searchTerm}</span>
       </>}</>
     ),
     idle: (
-      <><div className='loader'></div></>
+      <><div data-testid="idle" className='loader'></div></>
     ),
   };
   return (
