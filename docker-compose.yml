@@ -1,0 +1,27 @@
+services:
+  postgres-db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=travel_db
+      - POSTGRES_USER=travel_admin
+      - POSTGRES_PASSWORD=123456
+  spring-app:
+    image: travel-app:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DB_PASSWORD=123456
+      - SPRING_DB_USERNAME=travel_admin
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/travel_db
+    depends_on:
+      - postgres-db
+  travel-app-frontend:
+    build:
+      context: ./travelapp-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "9090:80"
+    depends_on:
+      - spring-app

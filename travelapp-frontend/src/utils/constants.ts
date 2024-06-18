@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export const AUTH_LOCALSTORAGE = "AUTH_USER";
 export const API_VERSION_1_0 = "1.0";
 

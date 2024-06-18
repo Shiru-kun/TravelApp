@@ -6,9 +6,9 @@ server:
       time-to-live: 6000
 spring:
   datasource:
-    username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/vodafone_travel_assistant?currentSchema=vodafone_travel_assistant
+    username: ${SPRING_DB_USERNAME}
+    password: ${SPRING_DB_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
