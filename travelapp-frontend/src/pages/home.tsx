@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 const Home=()=> {
 
-    const [activeTab, setActiveTab] = useState('weather');
+    const [selectedTab, setSelectedTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
     const [countryCode, setCountryCode] = useState<string>('MZ');
     const navigate = useNavigate()
@@ -24,7 +24,6 @@ const Home=()=> {
     setSearchTerm(prev=>event.target.value)
   }
   const login = ()=>{
-
     navigate("login");
   }
   const getGreeting = () => {
@@ -33,9 +32,9 @@ const Home=()=> {
     if (hour < 18) return t('GoodAfternoon');
     return t('GoodNight');
   };
-  const _logout =(e:any)=>{
+  const logout =(e:any)=>{
     localStorage.clear();
-    window.location.reload();
+    login();
   }
 
     return (
@@ -46,7 +45,7 @@ const Home=()=> {
           {userLogged ? (
             <div style={{padding:5, margin:5}}>
               <p>{`${getGreeting()}, ${userLogged?.userAccountDto?.fullname}`}</p>
-              <a onClick={_logout}>{t('SignOut')}</a>
+              <a onClick={logout}>{t('SignOut')}</a>
             </div>
           ) : (
             <a onClick={login}>{t('GoToLogin')}</a>
@@ -56,25 +55,25 @@ const Home=()=> {
           type="text"
           placeholder={t('SearchForCity')}
           value={searchTerm}
-          disabled={activeTab!=="weather"}
+          disabled={selectedTab!=="weather"}
           onChange={handleChange}
           className={styles.search}
         />
         <div className={styles.tabs}>
-          <button className={activeTab === 'weather' ? styles.active : ''} onClick={() => setActiveTab('weather')}>
+          <button className={selectedTab === 'weather' ? styles.active : ''} onClick={() => setSelectedTab('weather')}>
            {t('Weather')}
           </button>
-          <button disabled={!searchTerm} className={activeTab === 'exchangerate' ? styles.active : ''} onClick={() => setActiveTab('exchangerate')}>
+          <button disabled={!searchTerm} className={selectedTab === 'exchangerate' ? styles.active : ''} onClick={() => setSelectedTab('exchangerate')}>
           {t('ExchangeRate')}
           </button>
-          <button disabled={!searchTerm} className={activeTab === 'gpdpopulation' ? styles.active : ''} onClick={() => setActiveTab('gpdpopulation')}>
+          <button disabled={!searchTerm} className={selectedTab === 'gpdpopulation' ? styles.active : ''} onClick={() => setSelectedTab('gpdpopulation')}>
           {t('PopulationAndGpd')}
           </button>
         </div>
         <div className={styles.content}>
-          {activeTab === 'weather' && <WeatherTab searchTerm={searchTerm} setCountryCode={setCountryCode}/>}
-          {activeTab === 'exchangerate' && <ExchangeRateTab countryCode={countryCode} />}
-          {activeTab === 'gpdpopulation' && <PopulationGpdTab countryCode={countryCode}/>}
+          {selectedTab === 'weather' && <WeatherTab searchTerm={searchTerm} setCountryCode={setCountryCode}/>}
+          {selectedTab === 'exchangerate' && <ExchangeRateTab countryCode={countryCode} />}
+          {selectedTab === 'gpdpopulation' && <PopulationGpdTab countryCode={countryCode}/>}
         </div>
       </div>
             
