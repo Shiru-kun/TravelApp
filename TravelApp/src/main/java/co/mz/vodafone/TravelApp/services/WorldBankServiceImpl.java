@@ -138,9 +138,6 @@ public class WorldBankServiceImpl implements IWorldBankService {
         Map<?, ?> errorMessage = (Map<?, ?>) response.get(0);
         List<?> messageList = (List<?>) errorMessage.get("message");
         if (!messageList.isEmpty() && messageList.get(0) instanceof Map) {
-            Map<?, ?> messageDetails = (Map<?, ?>) messageList.get(0);
-            String errorKey = (String) messageDetails.get("key");
-            String errorValue = (String) messageDetails.get("value");
             throw new BadRequestException(INVALID_INSERTED_KEY.concat(key));
         }
     }
