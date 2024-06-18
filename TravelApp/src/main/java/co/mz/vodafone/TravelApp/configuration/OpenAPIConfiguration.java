@@ -15,6 +15,7 @@ public class OpenAPIConfiguration {
     public static final String URL = "http://localhost:";
     public static final String DEVELOPMENT = "Development";
     public static final String VODAFONE_CHALLENGE_API_FOR_TRAVEL_ASSISTANT_APP = "Vodafone challenge API for travel assistant app";
+    public static final String VERSION = "1.0";
     @Value("${server.port}")
     private long serverPort;
 
@@ -25,7 +26,7 @@ public class OpenAPIConfiguration {
         server.setDescription(DEVELOPMENT);
         Info information = new Info()
                 .title(VODAFONE_CHALLENGE_API_FOR_TRAVEL_ASSISTANT_APP)
-                .version("1.0")
+                .version(VERSION)
                 .description(VODAFONE_CHALLENGE_API_FOR_TRAVEL_ASSISTANT_APP);
         //   .contact(myContact);
         return new OpenAPI().info(information).servers(List.of(server));

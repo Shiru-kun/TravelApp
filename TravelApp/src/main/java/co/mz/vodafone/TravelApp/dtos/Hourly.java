@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor
 @Data
 public class Hourly {
     private long dt;

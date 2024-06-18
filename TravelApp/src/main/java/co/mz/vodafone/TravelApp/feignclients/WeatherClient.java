@@ -14,5 +14,5 @@ import java.util.List;
 public interface WeatherClient {
 
     @GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    WeatherData getWeatherData(@RequestParam("lat") double lat, @RequestParam("lon") double lng);
+    public WeatherData getWeatherData(@RequestParam("lat") double lat, @RequestParam("lon") double lng);
 }

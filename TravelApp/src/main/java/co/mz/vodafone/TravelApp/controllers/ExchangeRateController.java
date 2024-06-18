@@ -28,6 +28,8 @@ public class ExchangeRateController {
     public static final String EXCHANGE_RATE = "exchangeRate";
     public static final String EXCHANGE_RATE_KEY = "#exchangeRateKey";
     public static final String GET_EXCHANGE_RATE_DATA_FOR_A_GIVEN_SYMBOL = "Get exchange rate data for a given symbol";
+    public static final String DEFAULTS_ENDPOINTS_IF_NO_SYMBOL_IS_PROVIDED = "Defaults endpoints if no symbol is provided";
+    public static final String DEFAULTS_ENDPOINTS_IF_NO_SYMBOL_IS_PROVIDED1 = "Defaults endpoints if no symbol is provided";
     private final IExchangeRateService _exchangeRateService;
 
     public ExchangeRateController(IExchangeRateService exchangeRateService) {
@@ -47,12 +49,11 @@ public class ExchangeRateController {
             description = "symbol",
             required = true) @PathVariable("symbol") Optional<String> symbol) {
         Optional<ExchangeRateResponse> exchangeRateResponseOptional = _exchangeRateService.getExchangeRateBySymbol(symbol);
-        return ResponseEntity.status(HttpStatus.OK).body(exchangeRateResponseOptional.get());
+        return ResponseEntity.ok(exchangeRateResponseOptional.get());
     }
 
-    // Defaults endpoints if no symbol is provided
     @Operation(
-            summary = "Defaults endpoints if no symbol is provided",
+            summary = DEFAULTS_ENDPOINTS_IF_NO_SYMBOL_IS_PROVIDED1,
             tags = {"Exchange rate"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")}),
@@ -63,7 +64,7 @@ public class ExchangeRateController {
     }
 
     @Operation(
-            summary = "Defaults endpoints if no symbol is provided",
+            summary = DEFAULTS_ENDPOINTS_IF_NO_SYMBOL_IS_PROVIDED,
             tags = {"Exchange rate"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")}),

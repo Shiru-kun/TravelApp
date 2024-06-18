@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor
 @Data
 public class Current {
     private long dt;

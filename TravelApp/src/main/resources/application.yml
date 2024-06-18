@@ -1,8 +1,5 @@
 server:
   port: 8080
-  server:
-    servlet:
-      contextPath: /api
   cache:
     type: redis
     redis:

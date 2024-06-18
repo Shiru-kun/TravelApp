@@ -32,7 +32,6 @@ public class WeatherController {
         _weatherDataService = weatherDataService;
     }
 
-    // Get weather data for a given city
     @Operation(
             summary = GET_WEATHER_DATA_FOR_A_GIVEN_CITY,
             tags = {"Weather"})
@@ -45,10 +44,9 @@ public class WeatherController {
             description = "City",
             required = true) @PathVariable("city") Optional<String> city) {
         Optional<WeatherData> weatherDataOptional = _weatherDataService.getWeatherDataByCityName(city);
-        return ResponseEntity.status(HttpStatus.OK).body(weatherDataOptional.get());
+        return ResponseEntity.ok(weatherDataOptional.get());
     }
 
-    // Defaults endpoints if no city is provided
     @GetMapping("")
     public ResponseEntity<WeatherData> getDefaultWeather() {
         return getWeatherFor(Optional.empty());

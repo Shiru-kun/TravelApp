@@ -17,10 +17,4 @@ public interface ExchangeRateClient {
     public ExchangeRateResponse getExchangeRateByCountrySymbol(@RequestParam(value = "symbols", required = false) String symbol
     );
 
-    @GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ExchangeRateResponse getExchangeRate(@RequestParam(value = "symbol", required = false) String symbol,
-                                                @RequestParam(value = "base", required = false) String base,
-                                                @RequestParam(value = "start_date", required = false) Date start_date,
-                                                @RequestParam(value = "end_date", required = false) Date end_date
-    );
 }

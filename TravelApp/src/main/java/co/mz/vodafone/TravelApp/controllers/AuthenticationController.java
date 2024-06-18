@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
+    public static final String USER_LOGIN_ENDPOINT = "User login endpoint";
+    public static final String REGISTER_USER_ENDPOINT = "Register user endpoint";
     private IAuthenticationService _authenticationService;
 
     public AuthenticationController(IAuthenticationService authenticationService) {
@@ -27,7 +29,7 @@ public class AuthenticationController {
     }
 
     @Operation(
-            summary = "Register user endpoint",
+            summary = REGISTER_USER_ENDPOINT,
             tags = {"Authentication"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = UserAccount.class), mediaType = "application/json")}),
@@ -39,7 +41,7 @@ public class AuthenticationController {
     }
 
     @Operation(
-            summary = "User login endpoint",
+            summary = USER_LOGIN_ENDPOINT,
             tags = {"Authentication"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = LoginResponse.class), mediaType = "application/json")}),

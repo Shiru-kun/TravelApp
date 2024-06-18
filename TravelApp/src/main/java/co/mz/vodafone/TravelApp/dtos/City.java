@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.util.Map;
 
-@NoArgsConstructor
 @Data
 public class City {
     private String name;

@@ -76,16 +76,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException ex) {
-            response.setContentType(CONTENT_TYPE);
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setStatusCode(HttpStatus.FORBIDDEN.value());
-            errorResponse.setMessage(EXPIRED_SESSION.concat(ex.getMessage()));
             throw new ForbiddenException(EXPIRED_SESSION.concat(ex.getMessage()));
         } catch (Exception ex) {
             response.setContentType(CONTENT_TYPE);
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorResponse.setMessage(INTERNAL_SERVER_ERROR.concat(ex.getMessage()));
             handlerExceptionResolver.resolveException(request, response, null, new InternalServerErrorException(INTERNAL_SERVER_ERROR.concat(ex.getMessage())));
 
         }
