@@ -39,5 +39,7 @@ export const pt =  {
         Population :"Populacação",
         OpsWeEncounteredAnErrorTryAgain :"Ops ocorreu um erro, tente novamente",
         NoDataFound :"Sem informação a mostrar para",
+        Unknown :"Desconhecido",
+
     },
   }

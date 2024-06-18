@@ -8,7 +8,7 @@ import {  useNavigate } from 'react-router-dom'
 import { AUTH_LOCALSTORAGE } from "../utils/constants";
 import { useTranslation } from "react-i18next";
 
-export default function Home() {
+const Home=()=> {
 
     const [activeTab, setActiveTab] = useState('weather');
     const [searchTerm, setSearchTerm] = useState<string>('Maputo');
@@ -81,3 +81,4 @@ export default function Home() {
         </Layout>    
     )
   }
+  export default Home;

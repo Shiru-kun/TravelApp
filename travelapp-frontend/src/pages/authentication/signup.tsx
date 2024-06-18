@@ -8,7 +8,7 @@ import { LANGUAGES, SIGN_UP } from '../../utils/constants';
 import toast, { Toaster } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-export default function Signup() {
+const Signup =()=> {
   const navigate = useNavigate()
   const { i18n, t } = useTranslation();
 
@@ -95,4 +95,5 @@ export default function Signup() {
       </div>
     </Layout>
   );
-}
+};
+export default Signup;

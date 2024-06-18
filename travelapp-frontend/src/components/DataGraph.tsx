@@ -21,23 +21,28 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-let graphData :any[]= []
-  let labels :number[]= []
-const DataGraph = ({ label, color, data }: { data?: any, label: string, color?: string }) => {
+let graphData: any[] = []
+let labels: number[] = []
+
+type Props = {
+  data?: any,
+  label: string,
+  color?: string
+};
+const DataGraph = ({ label, color, data }: Props) => {
   const { t } = useTranslation();
 
-   try {
-     var mappedData = data?.data?.map((d: { date: any; value: any; }) => {
-       return { year: d.date, value: d.value }
-     });
-     mappedData = mappedData?.sort((a: { year: string; }, b: { year: string; }) => parseInt(a.year) - parseInt(b.year));
-      labels = mappedData?.map((d: { year: string; }) => parseInt(d.year));
-      graphData = mappedData?.map((d: { value: any; }) => d?.value ?? 0)
+  try {
+    var mappedData = data?.data?.map((d: { date: any; value: any; }) => {
+      return { year: d.date, value: d.value }
+    });
+    mappedData = mappedData?.sort((a: { year: string; }, b: { year: string; }) => parseInt(a.year) - parseInt(b.year));
+    labels = mappedData?.map((d: { year: string; }) => parseInt(d.year));
+    graphData = mappedData?.map((d: { value: any; }) => d?.value ?? 0)
 
-   } catch (ex) {
-    console.log({ex})
-     //TODO HANDLE
-   }
+  } catch (ex) {
+    console.log({ ex })
+  }
 
   const options = {
     responsive: true,

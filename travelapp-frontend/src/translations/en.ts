@@ -39,6 +39,7 @@ export const en =  {
         Population :"Population",
         OpsWeEncounteredAnErrorTryAgain :"Ops we encountered an error, try again",
         NoDataFound :"No data found for",
+        Unknown :"Unknown",
 
 
 

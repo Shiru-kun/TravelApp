@@ -5,8 +5,11 @@ import { MapContainer, TileLayer,Marker } from 'react-leaflet'
 import { useWeatherQuery } from '../services/weather-service';
 import { QueryStatus } from 'react-query';
 import { useTranslation } from 'react-i18next';
-
-const WeatherTab = ({searchTerm,setCountryCode}:{searchTerm:string, setCountryCode: React.Dispatch<React.SetStateAction<string>>}) => {
+type Props={
+    searchTerm:string,
+    setCountryCode: React.Dispatch<React.SetStateAction<string>>
+  };
+const WeatherTab = ({searchTerm,setCountryCode}:Props) => {
   const sendRequest:boolean = searchTerm?true:false;
   const { t } = useTranslation();
 

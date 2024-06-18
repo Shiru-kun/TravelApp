@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from '../styles/pages/home/home.module.scss';
 import { WeatherDataType } from '../types';
-import { convertToCelsius } from '../functions/weather';
+import { convertToCelsius, getTimeFromTimestamp } from '../functions/weather';
 import { useTranslation } from 'react-i18next';
-
-const WeatherCard =({ data }: { data?: WeatherDataType }) => {
+type Props ={
+  data?: WeatherDataType
+};
+const WeatherCard =({ data }:Props) => {
     const { weather, main, wind, clouds, sys, name } = data ||{};
+    const {sunrise, sunset} =sys ||{}
     const weatherIconUrl = `http://openweathermap.org/img/wn/${weather?.[0]?.icon}.png`;
     const { t } = useTranslation();
 
@@ -29,8 +32,8 @@ const WeatherCard =({ data }: { data?: WeatherDataType }) => {
               <p><strong>{t('Pressure')}:</strong> {main?.pressure} hPa</p>
               <p><strong>{t('Humidity')}:</strong> {main?.humidity}%</p>
               <p><strong>{t('Visibility')}:</strong> {data?.visibility??0 / 1000} km</p>
-            <p><strong>{t('Sunrise')}:</strong> {sys && sys.sunrise ? new Date(sys.sunrise * 1000).toLocaleTimeString() : 'N/A'}</p>
-            <p><strong>{t('Sunset')}:</strong> {sys && sys.sunset ? new Date(sys.sunset * 1000).toLocaleTimeString() : 'N/A'}</p>
+            <p><strong>{t('Sunrise')}:</strong> {sunrise ? getTimeFromTimestamp(sunrise) : t('Unknown')}</p>
+            <p><strong>{t('Sunset')}:</strong> {sunset ? getTimeFromTimestamp(sunset) :  t('Unknown')}</p>
 
             </div>
           </div>

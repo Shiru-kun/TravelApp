@@ -4,7 +4,10 @@ import DataGraph from './DataGraph';
 import { useWorldBankGpdQuery, useWorldBankPopulationQuery } from '../services/worldbank-service';
 import { useTranslation } from 'react-i18next';
 
-const PopulationGpdTab = ({countryCode}:{countryCode:string}) => {
+type Props = {
+  countryCode:string
+}; 
+const PopulationGpdTab = ({countryCode}:Props) => {
   const sendRequest:boolean = countryCode?true:false;
   const queryDataGpd = useWorldBankGpdQuery(countryCode,sendRequest);
   const queryDataPopulation = useWorldBankPopulationQuery(countryCode,sendRequest);

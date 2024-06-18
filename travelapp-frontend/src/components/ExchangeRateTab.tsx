@@ -3,7 +3,8 @@ import { useExchangeRateQuery } from '../services/exchange-rate-service';
 import { getCurrencyByCountryCode } from '../services/worldbank-service';
 import { useTranslation } from 'react-i18next';
 
-const ExchangeRateTab = ({countryCode }: {countryCode:string }) => {
+type Props ={countryCode:string };
+const ExchangeRateTab = ({countryCode }:Props ) => {
   const _countryCode = getCurrencyByCountryCode(countryCode);
   const { t } = useTranslation();
 
@@ -14,7 +15,7 @@ const ExchangeRateTab = ({countryCode }: {countryCode:string }) => {
     <div className={styles.card}>
       <h2>{t('ExchangeRate')}</h2>
       {data?.success  ? (
-        <p> {data?.base} = {data?.rates[`${_countryCode}`]}</p>
+        <span> 1 {data?.base} =  {_countryCode} {data?.rates?.[`${_countryCode}`]?.toFixed(2)}</span>
       ) : (
         <div className={`${styles.blurText} ${styles.tabContent}`} style={{margin:10}}> </div>
       )}

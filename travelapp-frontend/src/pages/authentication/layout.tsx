@@ -4,7 +4,7 @@ import styles from '../../styles/pages/authentication/auth.module.scss'
 type Props = {
     children: ReactNode
   }
-  export default function Layout({ children }: Props) {
+const Layout=({ children }: Props)=> {
   return (
     <>
      <div className={styles.layout}>
@@ -17,3 +17,4 @@ type Props = {
     </> 
   );
   }
+  export default Layout;
