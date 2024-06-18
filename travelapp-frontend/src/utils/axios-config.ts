@@ -1,4 +1,4 @@
-import axios ,{AxiosError,AxiosResponse } from 'axios';
+import axios ,{AxiosResponse } from 'axios';
 import { AUTH_LOCALSTORAGE, BASE_URL } from './constants';
 type Method = 'get' | 'post';
 const timeout = 60_000;
