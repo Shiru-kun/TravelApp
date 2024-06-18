@@ -40,7 +40,6 @@ describe("Lets test home",()=>{
   })
   it("user can type search input",()=>{
     const searchForCityKey = "SearchForCity";
-
     const inputSearch = screen.getByPlaceholderText(searchForCityKey);
     userEvent.clear(inputSearch);
     userEvent.type(inputSearch,"Pemba");
